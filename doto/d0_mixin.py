@@ -23,6 +23,7 @@ class d0mixin(object):
 
             BASEURL = "https://api.digitalocean.com"
             response = requests.get(BASEURL+event,headers=headers,params=kwds)
+            log.debug(response.url)
 
 
             if response.status_code == 200:

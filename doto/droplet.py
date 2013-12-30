@@ -40,16 +40,52 @@ class Droplet(d0mixin, object):
         self.__dict__.update(**data['event'])
 
     def percentage_update(self):
+        """
+        Convenience method to return the percentage of event completion
+        """
+
+        #needed to grab ip_address
+        self.update()
+
         self.event_update()
         return self.percentage
 
-    def destroy(self):
+    def rename(self,name=None):
+
+        """
+        This method renames the droplet to the specified name.
+
+        :type name: str
+        :param name: Name of the new droplet
+
+        """
+
+        # https://api.digitalocean.com/droplets/[droplet_id]/rename/?
+        # client_id=[your_client_id]&api_key=[your_api_key]&name=[name]
+
+        url = "/droplets/%s/rename" % (str(self.id))
+
+        data = self._request(url,name=name)
+
+        self.event_id = data['event_id']
+
+        log.info("Renaming: %d To:%s Event: %d" % (self.id, name, self.event_id))
+
+    def destroy(self, scrub_data=False):
+        """
+        This method destroys one of your droplets - this is irreversible.
+
+        :type scrub_data: bool
+        :param scrub_data: An optional bool which will strictly write 0s to your prior
+        partition to ensure that all data is completely erased.
+
+        """
         # https://api.digitalocean.com/droplets/[droplet_id]/destroy/?
         # client_id=[your_client_id]&api_key=[your_api_key]
 
         url = "/droplets/%s/destroy" % (str(self.id))
 
-        data = self._request(url)
+        data = self._request(url,scrub_data=scrub_data)
 
         self.event_id = data['event_id']
 

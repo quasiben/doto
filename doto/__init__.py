@@ -71,6 +71,9 @@ class connect_d0(d0mixin, object):
                                ssh_key_ids=18669
                                )
         """
+        #ssh_key_ids check/convert to string
+        if isinstance(ssh_key_ids,(tuple,list)):
+            ssh_key_ids = ', '.join(str(for)key in ssh_key_ids)
 
         data = self._request("/droplets/new",name=name,
                           size_id=size_id,image_id=image_id,
@@ -243,6 +246,7 @@ class connect_d0(d0mixin, object):
         #public key
         with open(keyfile+'_rsa.pub','w') as f:
             f.write(key.exportKey('OpenSSH'))
+        public_key = key.exportKey('OpenSSH')
         os.chmod(keyfile+'_rsa.pub', 0600)
 
         #private key
@@ -255,7 +259,7 @@ class connect_d0(d0mixin, object):
         # client_id=[your_client_id]&api_key=[your_api_key]
 
         data = self._request("/ssh_keys/new/", name=ssh_key_name,
-                             ssh_pub_key=keyfile+'_rsa.pub')
+                             ssh_pub_key=public_key)
 
         log.info(data['ssh_key'])
         return data['ssh_key']
