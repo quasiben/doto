@@ -6,6 +6,17 @@ from doto.logger import log
 from doto.config import Config
 from doto.droplet import Droplet
 from doto.d0_mixin import d0mixin
+from Crypto.PublicKey import RSA
+import os
+from os.path import join as pjoin
+
+try:
+  os.path.expanduser('~')
+  expanduser = os.path.expanduser
+except (AttributeError, ImportError):
+  # This is probably running on App Engine.
+  expanduser = (lambda x: x)
+
 
 BASEURL = "https://api.digitalocean.com"
 
@@ -159,30 +170,6 @@ class connect_d0(d0mixin, object):
         return df
 
 
-
-    def get_ssh_keys(self, status_check=None):
-        """
-        Convenience method to get user's ssh key ids
-
-        Data is converted to a Pandas's data frame for easy reading and sorting
-        https://api.digitalocean.com/ssh_keys/?client_id=[your_client_id]&api_key=[your_api_key]
-
-        >>> df_keys = d0.get_ssh_keys()
-        >>> print df_keys.head()
-
-        """
-
-
-        data = self._request("/ssh_keys", status_check)
-
-        if status_check:
-            return data
-
-        df = pd.DataFrame.from_dict(data['ssh_keys'])
-        return df
-
-
-
     def get_domains(self, status_check=None):
         """
         Convenience method to get Digital Ocean's list of Domains
@@ -205,9 +192,107 @@ class connect_d0(d0mixin, object):
         return df
 
 
+    def get_all_ssh_keys(self, status_check=None):
+        """
+        Convenience method to get user's ssh key ids
+
+        Data is converted to a Pandas's data frame for easy reading and sorting
+        https://api.digitalocean.com/ssh_keys/?client_id=[your_client_id]&api_key=[your_api_key]
+
+        >>> df_keys = d0.get_ssh_keys()
+        >>> print df_keys.head()
+
+        """
 
 
+        data = self._request("/ssh_keys", status_check)
 
+        if status_check:
+            return data
+
+        df = pd.DataFrame.from_dict(data['ssh_keys'])
+        return df
+
+
+    def create_key_pair(self, ssh_key_name=None, dry_run=False):
+        """
+        Method to cCreate a new key pair for your account.
+        This will create the key pair and store public key on Digital Ocean's servers
+
+        :type ssh_key_name: string
+        :param ssh_key_name: The name of the new keypair
+
+        :type dry_run: bool
+        :param dry_run: Set to True if the operation should not actually run.
+
+        :rtype: :class:`boto.ec2.keypair.KeyPair`
+        :return: The newly created :class:`boto.ec2.keypair.KeyPair`.
+                 The material attribute of the new KeyPair object
+                 will contain the the unencrypted PEM encoded RSA private key.
+        """
+
+        ssh_path = pjoin(expanduser('~'), '.ssh')
+
+        if not os.path.isdir(ssh_path): os.makedirs(ssh_path)
+
+        #store key file in ~/.ssh
+        keyfile = pjoin(ssh_path, ssh_key_name)
+
+        key = RSA.generate(2048,os.urandom)
+
+        #public key
+        with open(keyfile+'_rsa.pub','w') as f:
+            f.write(key.exportKey('OpenSSH'))
+        os.chmod(keyfile+'_rsa.pub', 0600)
+
+        #private key
+        with open(keyfile+'_rsa','w') as f:
+            f.write(key.exportKey())
+
+        os.chmod(keyfile+'_rsa', 0600)
+
+        # https://api.digitalocean.com/ssh_keys/new/?name=[ssh_key_name]&ssh_pub_key=[ssh_public_key]&
+        # client_id=[your_client_id]&api_key=[your_api_key]
+
+        data = self._request("/ssh_keys/new/", name=ssh_key_name,
+                             ssh_pub_key=keyfile+'_rsa.pub')
+
+        log.info(data['ssh_key'])
+        return data['ssh_key']
+
+    def delete_key_pair(self, ssh_key_id=None):
+        """
+        Delete the SSH key from your account.
+
+        :type ssh_key_id: int
+        :param ssh_key_id: The ID of the public key
+
+        """
+        # https://api.digitalocean.com/ssh_keys/[ssh_key_id]/destroy/?
+        # client_id=[your_client_id]&api_key=[your_api_key]
+
+        url = "/ssh_keys/%d/destroy" % (ssh_key_id)
+
+        data = self._request(url)
+
+        log.info(data)
+
+    def get_ssh_key(self, ssh_key_id=None):
+        """
+        Delete the SSH key from your account.
+
+        :type ssh_key_id: int
+        :param ssh_key_id: The ID of the public key
+
+        """
+        # https://api.digitalocean.com/ssh_keys/[ssh_key_id]/destroy/?
+        # client_id=[your_client_id]&api_key=[your_api_key]
+
+        url = "/ssh_keys/%d" % (ssh_key_id)
+
+        data = self._request(url)
+
+        log.info(data)
 
 
 
