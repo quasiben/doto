@@ -72,13 +72,13 @@ class Droplet(d0mixin, object):
         log.info("Renaming: %d To: %s Event: %d" % (self.id, name, self.event_id))
         self.update()
 
-    def destroy(self, scrub_data=False):
+    def destroy(self, scrub_data=True):
         """
         This method destroys one of your droplets - this is irreversible.
 
         :type scrub_data: bool
         :param scrub_data: An optional bool which will strictly write 0s to your prior
-        partition to ensure that all data is completely erased.
+        partition to ensure that all data is completely erased. True by default
 
         """
         # https://api.digitalocean.com/droplets/[droplet_id]/destroy/?
