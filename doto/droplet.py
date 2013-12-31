@@ -72,7 +72,7 @@ class Droplet(d0mixin, object):
         log.info("Renaming: %d To: %s Event: %d" % (self.id, name, self.event_id))
         self.update()
 
-    def destroy(self, scrub_data=True):
+    def destroy(self, scrub_data=1):
         """
         This method destroys one of your droplets - this is irreversible.
 
