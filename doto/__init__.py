@@ -73,7 +73,7 @@ class connect_d0(d0mixin, object):
         """
         #ssh_key_ids check/convert to string
         if isinstance(ssh_key_ids,(tuple,list)):
-            ssh_key_ids = ', '.join(str(for)key in ssh_key_ids)
+            ssh_key_ids = ', '.join(str(key) for key in ssh_key_ids)
 
         data = self._request("/droplets/new",name=name,
                           size_id=size_id,image_id=image_id,
