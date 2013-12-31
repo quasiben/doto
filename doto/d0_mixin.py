@@ -3,6 +3,9 @@ import requests
 
 from doto.logger import log
 
+class DOError(Exception):
+    pass
+
 class d0mixin(object):
 
     def _request(self, event, status_check=None, **kwds):
@@ -19,24 +22,26 @@ class d0mixin(object):
                 log.debug("%s = %s" % (key, value))
 
 
-            log.info('Getting '+event)
 
             BASEURL = "https://api.digitalocean.com"
             response = requests.get(BASEURL+event,headers=headers,params=kwds)
+            log.info('Getting '+event)
             log.debug(response.url)
-
 
             if response.status_code == 200:
                 data = response.json()
-                log.info("Successful return")
                 log.debug(data)
+
+                if data['status'] == 'ERROR':
+                    log.debug("Error with request: %s" % (data['message']))
+                    error = "MSG: %s" % (data['message'])
+                    raise DOError(error)
+
                 if status_check:
                     return response.status_code
 
                 return data
             else:
-                log.info("Error Getting Droplets")
-                log.error(response.status_code)
-                log.error("Error Getting Droplets")
-                # error handling
-                pass
+                #error
+                error = "Status code: %d MSG: %s" % (response.status_code, data['message'])
+                raise DOError(error)

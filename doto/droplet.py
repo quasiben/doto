@@ -229,7 +229,7 @@ class Droplet(d0mixin, object):
         log.info("Resizing Droplet: %d, Event: %d" % (self.id, self.event_id))
         log.info("Rebooting Droplet")
 
-    def snapshot(self,name=None):
+    def create_snapshot(self,name=None):
         """
         This method allows you to take a snapshot of the droplet once it has been powered off,
         which can later be restored or used to create a new droplet from the same image.

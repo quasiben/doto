@@ -184,7 +184,7 @@ class connect_d0(d0mixin, object):
         Data is converted to a Pandas's data frame for easy reading and sorting
         https://api.digitalocean.com/ssh_keys/?client_id=[your_client_id]&api_key=[your_api_key]
 
-        >>> df_keys = d0.get_ssh_keys()
+        >>> df_keys = d0.get_all_ssh_keys()
         >>> print df_keys.head()
 
         """
@@ -242,6 +242,9 @@ class connect_d0(d0mixin, object):
 
         data = self._request("/ssh_keys/new/", name=ssh_key_name,
                              ssh_pub_key=public_key)
+
+        #include path to newly created file
+        data['ssh_key']['path'] = keyfile+'_rsa'
 
         log.info(data['ssh_key'])
         return data['ssh_key']
