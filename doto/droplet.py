@@ -69,7 +69,8 @@ class Droplet(d0mixin, object):
 
         self.event_id = data['event_id']
 
-        log.info("Renaming: %d To:%s Event: %d" % (self.id, name, self.event_id))
+        log.info("Renaming: %d To: %s Event: %d" % (self.id, name, self.event_id))
+        self.update()
 
     def destroy(self, scrub_data=False):
         """
@@ -242,6 +243,12 @@ class Droplet(d0mixin, object):
 
         # https://api.digitalocean.com/droplets/[droplet_id]/snapshot/?name=[snapshot_name]&
         # client_id=[your_client_id]&api_key=[your_api_key]
+
+        #should thread this in the future
+        log.info("Powering off %d" % (self.id))
+        self.power_off()
+        while self.status != 'off':
+            self.update()
 
         url = "/droplets/%s/snapshot" % (str(self.id))
 

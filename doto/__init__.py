@@ -5,6 +5,7 @@ import pandas as pd
 from doto.logger import log
 from doto.config import Config
 from doto.droplet import Droplet
+from doto.image import Image
 from doto.d0_mixin import d0mixin
 from Crypto.PublicKey import RSA
 import os
@@ -135,7 +136,14 @@ class connect_d0(d0mixin, object):
         return df
 
 
-    def get_regions(self,status_check=None):
+    def get_all_regions(self,status_check=None):
+        """
+        This method will return all the available regions within the DigitalOcean cloud.
+
+        >>> df_rgs = d0.get_all_regions()
+        >>> print df_rgs.head()
+
+        """
         # https://api.digitalocean.com/sizes/?client_id=[your_client_id]&api_key=[your_api_key]
 
         data = self._request("/regions", status_check)
@@ -144,32 +152,6 @@ class connect_d0(d0mixin, object):
             return data
 
         df = pd.DataFrame.from_dict(data['regions'])
-        return df
-
-    def get_images(self, status_check=None):
-        """
-        Convenience method to get Digital Ocean's list of public images
-        and users current private images
-
-        Data is converted to a Pandas's data frame for easy reading and sorting
-        https://api.digitalocean.com/sizes/?client_id=[your_client_id]&api_key=[your_api_key]
-
-        >>> df_imgs = d0.get_images()
-        >>> print df_imgs.head()
-
-        or sort the images based on the distribution
-        >>> df_imgs.sort('distribution',inplace=True)
-        >>> df_imgs.head()
-        """
-
-        # https://api.digitalocean.com/images/?client_id=[your_client_id]&api_key=[your_api_key]
-
-        data = self._request("/images", status_check)
-
-        if status_check:
-            return data
-
-        df = pd.DataFrame.from_dict(data['images'])
         return df
 
 
@@ -297,6 +279,62 @@ class connect_d0(d0mixin, object):
         data = self._request(url)
 
         log.info(data)
+
+    def get_all_images(self, status_check=None):
+        """
+        Convenience method to get Digital Ocean's list of public images
+        and users current private images
+
+        Data is converted to a Pandas's data frame for easy reading and sorting
+        https://api.digitalocean.com/sizes/?client_id=[your_client_id]&api_key=[your_api_key]
+
+        >>> df_imgs = d0.get_all_images()
+        >>> print df_imgs.head()
+
+        or sort the images based on the distribution
+        >>> df_imgs.sort('distribution',inplace=True)
+        >>> df_imgs.head()
+        """
+
+        # https://api.digitalocean.com/images/?client_id=[your_client_id]&api_key=[your_api_key]
+
+        data = self._request("/images", status_check)
+
+        if status_check:
+            return data
+
+        df = pd.DataFrame.from_dict(data['images'])
+        return df
+
+    def get_image(self, image_id=None):
+        """
+        This method displays the attributes of an image.
+
+        :type image_id: int
+        :param image_id: The ID of the image
+
+        """
+        # https://api.digitalocean.com/images/[image_id]/?
+        # client_id=[your_client_id]&api_key=[your_api_key]
+
+        url = "/images/%d" % (image_id)
+
+        data = self._request(url)
+
+
+        log.info(data)
+
+        #don't like this but will do for now
+        data['image']['_client_id'] = self._client_id
+        data['image']['_api_key'] = self._api_key
+
+
+        return Image(**data['image'])
+
+
+
+    def get_all_events(self):
+        pass
 
 
 
