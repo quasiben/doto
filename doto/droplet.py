@@ -72,6 +72,84 @@ class Droplet(d0mixin, object):
         log.info("Renaming: %d To: %s Event: %d" % (self.id, name, self.event_id))
         self.update()
 
+    def rebuild(self, image_id=None):
+
+        """
+        This method allows you to reinstall a droplet with a default image.
+        This is useful if you want to start again but retain the same IP address for your droplet.
+
+
+
+        :type image_id: int
+        :param image_id: ID of the image you would like to use to rebuild your droplet with
+
+        """
+
+        # https://api.digitalocean.com/droplets/[droplet_id]/rebuild/?image_id=[image_id]&
+        # client_id=[your_client_id]&api_key=[your_api_key]
+
+
+        url = "/droplets/%s/rebuild" % (str(self.id))
+
+        data = self._request(url,image_id=image_id)
+
+        self.event_id = data['event_id']
+
+        log.info("Rebuild: %d With: %d Event: %d" % (self.id, image_id, self.event_id))
+        self.update()
+
+    def restore(self, image_id=None):
+
+        """
+        This method allows you to restore a droplet with a previous image or snapshot.
+        This will be a mirror copy of the image or snapshot to your droplet.
+        Be sure you have backed up any necessary information prior to restore.
+
+
+        :type image_id: int
+        :param image_id: ID of the image you would like to use to rebuild your droplet with
+
+        """
+
+        # https://api.digitalocean.com/droplets/[droplet_id]/restore/?image_id=[image_id]&
+        # client_id=[your_client_id]&api_key=[your_api_key]
+
+
+        url = "/droplets/%s/restore" % (str(self.id))
+
+        data = self._request(url,image_id=image_id)
+
+        self.event_id = data['event_id']
+
+        log.info("Restoring: %d With: %d Event: %d" % (self.id, image_id, self.event_id))
+        self.update()
+
+
+    def set_backups(self,flag=True):
+        """
+        This method enables/disables automatic backups
+        which run in the background daily to backup your droplet's data.
+
+
+        :type flag: bool
+        :param scrub_data: A bool which enables/disables backups
+
+        """
+        # https://api.digitalocean.com/droplets/[droplet_id]/enable_backups/?
+        # client_id=[your_client_id]&api_key=[your_api_key]
+
+
+        backup_setting = "enable_backups" if flag else "disable_backups""
+
+        url = "/droplets/%s/%s" % (str(self.id), backup_setting)
+
+        data = self._request(url)
+
+        self.event_id = data['event_id']
+
+        log.info("Destroying: %d, Event: %d" % (self.id, self.event_id))
+
+
     def destroy(self, scrub_data=1):
         """
         This method destroys one of your droplets - this is irreversible.

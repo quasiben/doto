@@ -334,11 +334,3 @@ class connect_d0(d0mixin, object):
 
         return Image(**data['image'])
 
-
-
-    def get_all_events(self):
-        pass
-
-
-
-
