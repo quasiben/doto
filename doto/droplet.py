@@ -139,7 +139,7 @@ class Droplet(d0mixin, object):
         # client_id=[your_client_id]&api_key=[your_api_key]
 
 
-        backup_setting = "enable_backups" if flag else "disable_backups""
+        backup_setting = "enable_backups" if flag else "disable_backups"
 
         url = "/droplets/%s/%s" % (str(self.id), backup_setting)
 
