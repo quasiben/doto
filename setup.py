@@ -10,11 +10,10 @@ versioneer.versionfile_build = 'doto/_version.py'
 versioneer.tag_prefix = ''
 versioneer.parentdir_prefix = 'doto-'
 
-cmdclass = versioneer.get_cmdclass()
-
 setup(
     name = 'doto',
     version = versioneer.get_version(),
+    cmdclass = versioneer.get_cmdclass(),
     description='Python Interface to Digital Ocean',
     author = 'Benjamin Zaitlen',
     packages = ['doto'],

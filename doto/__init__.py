@@ -18,6 +18,9 @@ except (AttributeError, ImportError):
   # This is probably running on App Engine.
   expanduser = (lambda x: x)
 
+from ._version import get_versions
+__version__ = get_versions()['version']
+del get_versions
 
 BASEURL = "https://api.digitalocean.com"
 

@@ -176,8 +176,8 @@ def versions_from_parentdir(parentdir_prefix, versionfile_source, verbose=False)
     return {"version": dirname[len(parentdir_prefix):], "full": ""}
 
 tag_prefix = ""
-parentdir_prefix = "tr_connect-"
-versionfile_source = "tr_connect/_version.py"
+parentdir_prefix = "doto-"
+versionfile_source = "doto/_version.py"
 
 def get_versions(default={"version": "unknown", "full": ""}, verbose=False):
     variables = { "refnames": git_refnames, "full": git_full }
