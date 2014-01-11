@@ -75,6 +75,7 @@ class connect_d0(d0mixin, object):
                                ssh_key_ids=18669
                                )
         """
+
         #ssh_key_ids check/convert to string
         if isinstance(ssh_key_ids,(tuple,list)):
             ssh_key_ids = ', '.join(str(key) for key in ssh_key_ids)
@@ -97,7 +98,18 @@ class connect_d0(d0mixin, object):
 
 
     def get_all_droplets(self, status_check=None):
-        # https://api.digitalocean.com/droplets/?client_id=[your_client_id]&api_key=[your_api_key]
+        """
+        This method returns all active droplets that are currently running in your account.
+        All available API information is presented for each droplet.
+
+        https://api.digitalocean.com/droplets/?
+        client_id=[your_client_id]&api_key=[your_api_key]
+
+        :rtype: list
+        :return: A list of :class:`doto.Droplet`
+        """
+
+
         log.info("Get All Droplets")
         data = self._request("/droplets",status_check)
 
@@ -115,7 +127,17 @@ class connect_d0(d0mixin, object):
         return [Droplet(**drop) for drop in data['droplets']]
 
     def get_droplet(self, id=None):
-        # https://api.digitalocean.com/droplets/[droplet_id]?client_id=[your_client_id]&api_key=[your_api_key]
+        """
+        This method returns full information for a specific droplet ID that is passed in the URL.
+
+        :type id: int
+        :param id: ID of the droplet
+
+        https://api.digitalocean.com/droplets/[droplet_id]?
+        client_id=[your_client_id]&api_key=[your_api_key]
+
+        """
+
         data = self._request("/droplets/"+str(id))
 
         #don't like this but will do for now
@@ -127,7 +149,12 @@ class connect_d0(d0mixin, object):
 
 
     def get_sizes(self, status_check=None):
-        # https://api.digitalocean.com/sizes/?client_id=[your_client_id]&api_key=[your_api_key]
+        """
+        This method returns all the available sizes that can be used to create a droplet.
+
+        https://api.digitalocean.com/sizes/?
+        client_id=[your_client_id]&api_key=[your_api_key]
+        """
 
         data = self._request("/sizes", status_check)
 
@@ -146,8 +173,9 @@ class connect_d0(d0mixin, object):
         >>> df_rgs = d0.get_all_regions()
         >>> print df_rgs.head()
 
+        https://api.digitalocean.com/sizes/?
+        client_id=[your_client_id]&api_key=[your_api_key]
         """
-        # https://api.digitalocean.com/sizes/?client_id=[your_client_id]&api_key=[your_api_key]
 
         data = self._request("/regions", status_check)
 
@@ -160,14 +188,16 @@ class connect_d0(d0mixin, object):
 
     def get_domains(self, status_check=None):
         """
-        Convenience method to get Digital Ocean's list of Domains
+        This method returns all of your current domains.
+
 
         Data is converted to a Pandas's data frame for easy reading and sorting
-        https://api.digitalocean.com/domains/?client_id=[your_client_id]&api_key=[your_api_key]
 
         >>> df_domains = d0.get_ssh_keys()
         >>> print df_domains.head()
 
+        https://api.digitalocean.com/domains/?
+        client_id=[your_client_id]&api_key=[your_api_key]
         """
 
 
@@ -182,7 +212,9 @@ class connect_d0(d0mixin, object):
 
     def get_all_ssh_keys(self, status_check=None):
         """
-        Convenience method to get user's ssh key ids
+        This method lists all the available public SSH keys in
+        your account that can be added to a droplet.
+
 
         Data is converted to a Pandas's data frame for easy reading and sorting
         https://api.digitalocean.com/ssh_keys/?client_id=[your_client_id]&api_key=[your_api_key]
@@ -190,6 +222,8 @@ class connect_d0(d0mixin, object):
         >>> df_keys = d0.get_all_ssh_keys()
         >>> print df_keys.head()
 
+        https://api.digitalocean.com/ssh_keys/?
+        client_id=[your_client_id]&api_key=[your_api_key]
         """
 
 
@@ -204,8 +238,7 @@ class connect_d0(d0mixin, object):
 
     def create_key_pair(self, ssh_key_name=None, dry_run=False):
         """
-        Method to cCreate a new key pair for your account.
-        This will create the key pair and store public key on Digital Ocean's servers
+        Method to create a key pair and store the public key on Digital Ocean's servers
 
         :type ssh_key_name: string
         :param ssh_key_name: The name of the new keypair
@@ -213,10 +246,11 @@ class connect_d0(d0mixin, object):
         :type dry_run: bool
         :param dry_run: Set to True if the operation should not actually run.
 
-        :rtype: :class:`boto.ec2.keypair.KeyPair`
-        :return: The newly created :class:`boto.ec2.keypair.KeyPair`.
-                 The material attribute of the new KeyPair object
-                 will contain the the unencrypted PEM encoded RSA private key.
+        :rtype: dict
+        :return: Dictionary of SSH key info and local path
+
+        https://api.digitalocean.com/ssh_keys/new/?name=[ssh_key_name]&ssh_pub_key=[ssh_public_key]&
+        client_id=[your_client_id]&api_key=[your_api_key]
         """
 
         ssh_path = pjoin(expanduser('~'), '.ssh')
@@ -240,9 +274,6 @@ class connect_d0(d0mixin, object):
 
         os.chmod(keyfile+'_rsa', 0600)
 
-        # https://api.digitalocean.com/ssh_keys/new/?name=[ssh_key_name]&ssh_pub_key=[ssh_public_key]&
-        # client_id=[your_client_id]&api_key=[your_api_key]
-
         data = self._request("/ssh_keys/new/", name=ssh_key_name,
                              ssh_pub_key=public_key)
 
@@ -259,9 +290,9 @@ class connect_d0(d0mixin, object):
         :type ssh_key_id: int
         :param ssh_key_id: The ID of the public key
 
+        https://api.digitalocean.com/ssh_keys/[ssh_key_id]/destroy/?
+        client_id=[your_client_id]&api_key=[your_api_key]
         """
-        # https://api.digitalocean.com/ssh_keys/[ssh_key_id]/destroy/?
-        # client_id=[your_client_id]&api_key=[your_api_key]
 
         url = "/ssh_keys/%d/destroy" % (ssh_key_id)
 
@@ -276,9 +307,9 @@ class connect_d0(d0mixin, object):
         :type ssh_key_id: int
         :param ssh_key_id: The ID of the public key
 
+        https://api.digitalocean.com/ssh_keys/[ssh_key_id]/destroy/?
+        client_id=[your_client_id]&api_key=[your_api_key]
         """
-        # https://api.digitalocean.com/ssh_keys/[ssh_key_id]/destroy/?
-        # client_id=[your_client_id]&api_key=[your_api_key]
 
         url = "/ssh_keys/%d" % (ssh_key_id)
 
@@ -300,9 +331,10 @@ class connect_d0(d0mixin, object):
         or sort the images based on the distribution
         >>> df_imgs.sort('distribution',inplace=True)
         >>> df_imgs.head()
-        """
 
-        # https://api.digitalocean.com/images/?client_id=[your_client_id]&api_key=[your_api_key]
+        https://api.digitalocean.com/images/?
+        client_id=[your_client_id]&api_key=[your_api_key]
+        """
 
         data = self._request("/images", status_check)
 
@@ -319,9 +351,12 @@ class connect_d0(d0mixin, object):
         :type image_id: int
         :param image_id: The ID of the image
 
+        :rtype: :class:`doto.Image`
+        :return: The newly created :class:`doto.Image`.
+
+        https://api.digitalocean.com/images/[image_id]/?
+        client_id=[your_client_id]&api_key=[your_api_key]
         """
-        # https://api.digitalocean.com/images/[image_id]/?
-        # client_id=[your_client_id]&api_key=[your_api_key]
 
         url = "/images/%d" % (image_id)
 
@@ -336,4 +371,3 @@ class connect_d0(d0mixin, object):
 
 
         return Image(**data['image'])
-

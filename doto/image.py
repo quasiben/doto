@@ -18,8 +18,12 @@ class Image(d0mixin, object):
         self.__dict__.update(kwds)
 
     def event_update(self):
-        # https://api.digitalocean.com/events/[event_id]/?
-        # client_id=[your_client_id]&api_key=[your_api_key]
+        """
+        Method to update Image (primarily used to update ip information)
+
+        https://api.digitalocean.com/events/[event_id]/?
+        client_id=[your_client_id]&api_key=[your_api_key]
+        """
 
         url = "/events/%s" % (str(self.event_id))
         data = self._request(url)

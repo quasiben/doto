@@ -16,9 +16,9 @@ except (AttributeError, ImportError):
 
 # By default we use two locations for the doto configurations,
 # /etc/Doto.cfg and ~/.doto (which works on Windows and Unix).
-DotoConfigPath = '/etc/doto.cfg'
+DotoConfigPath = '/etc/dotorc.cfg'
 DotoConfigLocations = [DotoConfigPath]
-UserConfigPath = pjoin(expanduser('~'), '.doto')
+UserConfigPath = pjoin(expanduser('~'),'.doto', '.dotorc')
 DotoConfigLocations.append(UserConfigPath)
 
 # If there's a DOTO_CONFIG variable set, we load ONLY

@@ -30,6 +30,9 @@ pip-log.txt
 .tox
 nosetests.xml
 
+#sdist
+MANIFEST
+
 # Translations
 *.mo
 
