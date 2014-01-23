@@ -17,6 +17,8 @@ setup(
     description='Python Interface to Digital Ocean',
     author = 'Benjamin Zaitlen',
     packages = ['doto'],
-    install_requires=['requests>=2.0.1',],
+    install_requires=['requests>=2.0.1',
+                      'pandas>=0.12',
+                      'pycrypto>=2.6.1'],
     package_data={'doto':['dotorc']},
 )
