@@ -14,7 +14,9 @@
 
 import sys
 import os
-import juliadoc
+import sphinx_rtd_theme
+
+# import juliadoc
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -34,9 +36,9 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
-    'juliadoc.julia', 
-    'juliadoc.jlhelp',
 ]
+# 'juliadoc.julia',
+# 'juliadoc.jlhelp',
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -106,11 +108,16 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#html_theme = 'default'
+if sphinx_rtd_theme:
+    html_theme = "sphinx_rtd_theme"
+    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+else:
+    html_theme = "default"
 
-html_theme = 'julia'
-html_theme_path = [juliadoc.get_theme_dir()]
-html_sidebars = juliadoc.default_sidebars()
+
+# html_theme = 'julia'
+# html_theme_path = [juliadoc.get_theme_dir()]
+# html_sidebars = juliadoc.default_sidebars()
 
 #html_theme = 'bootstrap'
 #html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()

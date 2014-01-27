@@ -31,7 +31,8 @@ doto supports the following features:
 - Domain:
  - Coming Soon
 
-To get started with doto create a .doto file in your home directory with your **api_key** and **client_id** listed:
+To get started with doto create a **.dotorc** file in a directory named, **~/.doto**, with your **api_key**
+and **client_id** listed:
 
 ```
 [Credentials]

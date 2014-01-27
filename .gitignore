@@ -40,3 +40,6 @@ MANIFEST
 .mr.developer.cfg
 .project
 .pydevproject
+
+# DOC
+_build
