@@ -42,4 +42,4 @@ MANIFEST
 .pydevproject
 
 # DOC
-_build
+doc/_build
