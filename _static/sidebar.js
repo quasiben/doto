@@ -2,36 +2,42 @@
  * sidebar.js
  * ~~~~~~~~~~
  *
- * This script manages the Sphinx sidebar position, scrolling and collapsing
- * for the Julia theme.
+ * This script makes the Sphinx sidebar collapsible.
  *
- * Based on the sidebar script for the default sphinx theme.
+ * .sphinxsidebar contains .sphinxsidebarwrapper.  This script adds
+ * in .sphixsidebar, after .sphinxsidebarwrapper, the #sidebarbutton
+ * used to collapse and expand the sidebar.
  *
- * default sphinx theme:
- * :copyright: Copyright 2007-2011 by the Sphinx team, see AUTHORS.
+ * When the sidebar is collapsed the .sphinxsidebarwrapper is hidden
+ * and the width of the sidebar and the margin-left of the document
+ * are decreased. When the sidebar is expanded the opposite happens.
+ * This script saves a per-browser/per-session cookie used to
+ * remember the position of the sidebar among the pages.
+ * Once the browser is closed the cookie is deleted and the position
+ * reset to the default (expanded).
+ *
+ * :copyright: Copyright 2007-2013 by the Sphinx team, see AUTHORS.
  * :license: BSD, see LICENSE for details.
- *
- * julia theme:
- * :copyright: Copyright 2012 by the Julia authors, see AUTHORS.
- * :license: MIT, see  LICENSE for details.
  *
  */
 
 $(function() {
+  
+  
+  
+  
+  
+  
+  
+
   // global elements used by the functions.
-  var body= $('div.body');
+  // the 'sidebarbutton' element is defined as global after its
+  // creation, in the add_sidebar_button function
   var bodywrapper = $('.bodywrapper');
-  var footerwrapper = $('.footerwrapper');
   var sidebar = $('.sphinxsidebar');
-  var sidebarview = $('.sphinxsidebarview');
-  var sidebarcontent = $('.sphinxsidebarcontent');
-  var sidebarbuttondiv = $('.sphinxsidebarbutton');
-  var sidebarbutton = $('#sidebarbutton');
-  var searchq = $('.search [name=q]');
+  var sidebarwrapper = $('.sphinxsidebarwrapper');
 
-  var uncollapsed_height = 0;
-
-  // if for some reason the document has no sidebar, do not run into errors
+  // for some reason, the document has no sidebar; do not run into errors
   if (!sidebar.length) return;
 
   // original margin-left of the bodywrapper and width of the sidebar
@@ -41,26 +47,15 @@ $(function() {
 
   // margin-left of the bodywrapper and width of the sidebar
   // with the sidebar collapsed
-  var bw_margin_collapsed = '40px';
-  var ssb_width_collapsed = '30px';
+  var bw_margin_collapsed = '.8em';
+  var ssb_width_collapsed = '.8em';
 
-  // sidebar paddings
-  var barpadtop = parseFloat(sidebar.css('padding-top'));
-  var barpadbottom = parseFloat(sidebar.css('padding-bottom'));
-  var barpad = barpadtop + barpadbottom;
-
-  var barscroll = 0;
-
-  function viewOffsetTop(elem) {
-    // NOTE: jQuery's offset() doesn't work (evaluates nodes
-    //       as being disconnected and returns 0); plus we need
-    //       the offset relative to the viewport, so this approach
-    //       is more direct
-    return elem[0].getBoundingClientRect().top;
-  }
+  // colors used by the current theme
+  var dark_color = $('.related').css('background-color');
+  var light_color = $('.document').css('background-color');
 
   function sidebar_is_collapsed() {
-    return sidebarcontent.is(':not(:visible)');
+    return sidebarwrapper.is(':not(:visible)');
   }
 
   function toggle_sidebar() {
@@ -70,91 +65,84 @@ $(function() {
       collapse_sidebar();
   }
 
-  function compute_uncollapsed_height() {
-    var isc = sidebar_is_collapsed();
-    if (isc)
-      expand_sidebar();
-    uncollapsed_height = Math.min(
-            sidebarcontent.outerHeight(),
-            sidebarcontent.parent().height() );
-    if (isc)
-      collapse_sidebar();
-  }
-
-  function get_collapsed_height() {
-    var bartop = viewOffsetTop(sidebar);
-    return Math.min(uncollapsed_height, $(window).height() - barpad - bartop);
-  }
-
-  function set_button_margin() {
-    var bartop = viewOffsetTop(sidebar);
-    var barheight = sidebarbuttondiv.height();
-    var buttonheight = sidebarbutton.height();
-    var buttonscroll = sidebarview.scrollTop();
-    var newmargin = (Math.min(barheight, $(window).height() - barpad - bartop) - buttonheight) / 2 + buttonscroll;
-    sidebarbutton.css('margin-top', newmargin);
-    searchq.css('width', sidebarcontent.width() - 50);
-  }
-
   function collapse_sidebar() {
-    barscroll = sidebarview.scrollTop();
-    sidebarview.scrollTop(0);
-
-    var newheight = get_collapsed_height();
-
-    sidebarcontent.hide();
+    sidebarwrapper.hide();
     sidebar.css('width', ssb_width_collapsed);
-    var newmargins = {
-      'margin-left': bw_margin_collapsed,
-      'margin-right': bw_margin_collapsed,
-    };
-    bodywrapper.css(newmargins);
-    footerwrapper.css(newmargins);
-    sidebarbuttondiv.css({
-      'height': newheight,
-      'border-radius': '5px',
-      'float': '',
+    bodywrapper.css('margin-left', bw_margin_collapsed);
+    sidebarbutton.css({
+        'margin-left': '0',
+        'height': bodywrapper.height()
     });
     sidebarbutton.find('span').text('»');
-    sidebarbuttondiv.attr('title', _('Expand sidebar'));
-    set_button_margin();
+    sidebarbutton.attr('title', _('Expand sidebar'));
     document.cookie = 'sidebar=collapsed';
   }
 
   function expand_sidebar() {
-    var newmargins = {
-      'margin-left': bw_margin_expanded,
-      'margin-right': bw_margin_expanded,
-    };
-    bodywrapper.css(newmargins);
-    footerwrapper.css(newmargins);
-    sidebar.css('width', '');
-    sidebarcontent.show();
-    compute_uncollapsed_height();
-    sidebarbuttondiv.css({
-      'height': uncollapsed_height,
-      'border-radius': '0 5px 5px 0',
-      'float': 'right',
+    bodywrapper.css('margin-left', bw_margin_expanded);
+    sidebar.css('width', ssb_width_expanded);
+    sidebarwrapper.show();
+    sidebarbutton.css({
+        'margin-left': ssb_width_expanded-12,
+        'height': bodywrapper.height()
     });
     sidebarbutton.find('span').text('«');
-    sidebarbuttondiv.attr('title', _('Collapse sidebar'));
-    set_button_margin();
-    sidebarview.scrollTop(barscroll);
+    sidebarbutton.attr('title', _('Collapse sidebar'));
     document.cookie = 'sidebar=expanded';
   }
 
-  function prepare_sidebar_button() {
-    sidebarbuttondiv.click(toggle_sidebar);
-    sidebarbuttondiv.attr('title', _('Collapse sidebar'));
+  function add_sidebar_button() {
+    sidebarwrapper.css({
+        'float': 'left',
+        'margin-right': '0',
+        'width': ssb_width_expanded - 28
+    });
+    // create the button
+    sidebar.append(
+        '<div id="sidebarbutton"><span>&laquo;</span></div>'
+    );
+    var sidebarbutton = $('#sidebarbutton');
+    light_color = sidebarbutton.css('background-color');
+    // find the height of the viewport to center the '<<' in the page
+    var viewport_height;
+    if (window.innerHeight)
+ 	  viewport_height = window.innerHeight;
+    else
+	  viewport_height = $(window).height();
+    sidebarbutton.find('span').css({
+        'display': 'block',
+        'margin-top': (viewport_height - sidebar.position().top - 20) / 2
+    });
+
+    sidebarbutton.click(toggle_sidebar);
+    sidebarbutton.attr('title', _('Collapse sidebar'));
+    sidebarbutton.css({
+        'color': '#FFFFFF',
+        'border-left': '1px solid ' + dark_color,
+        'font-size': '1.2em',
+        'cursor': 'pointer',
+        'height': bodywrapper.height(),
+        'padding-top': '1px',
+        'margin-left': ssb_width_expanded - 12
+    });
+
+    sidebarbutton.hover(
+      function () {
+          $(this).css('background-color', dark_color);
+      },
+      function () {
+          $(this).css('background-color', light_color);
+      }
+    );
   }
 
-  function set_state_from_cookie() {
+  function set_position_from_cookie() {
     if (!document.cookie)
       return;
     var items = document.cookie.split(';');
     for(var k=0; k<items.length; k++) {
       var key_val = items[k].split('=');
-      var key = key_val[0];
+      var key = key_val[0].replace(/ /, "");  // strip leading spaces
       if (key == 'sidebar') {
         var value = key_val[1];
         if ((value == 'collapsed') && (!sidebar_is_collapsed()))
@@ -165,32 +153,7 @@ $(function() {
     }
   }
 
-  function set_sidebar_pos() {
-    var bodyoff = viewOffsetTop(body);
-    sidebar.css('top', Math.max(bodyoff,0));
-    if (!sidebar_is_collapsed()) {
-      sidebar.css('width', '');
-      compute_uncollapsed_height();
-      sidebarbuttondiv.css('height', uncollapsed_height);
-    } else {
-      var newheight = get_collapsed_height();
-      sidebarbuttondiv.css('height', newheight);
-    }
-    set_button_margin();
-  }
-
-  prepare_sidebar_button();
-  set_state_from_cookie();
-  compute_uncollapsed_height();
-  set_sidebar_pos();
-  sidebar.css('margin-left','auto');
-  $(window).scroll(set_sidebar_pos);
-  sidebarview.scroll(set_button_margin);
-  $(window).resize(set_sidebar_pos);
-
-  $("img[alt]").each(function(){
-      $(this).attr('title', $(this).attr('alt'));
-  });
-
+  add_sidebar_button();
+  var sidebarbutton = $('#sidebarbutton');
+  set_position_from_cookie();
 });
-

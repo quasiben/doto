@@ -1,0 +1,238 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Images &mdash; doto 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'./',
+        VERSION:'0.1',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+    <link rel="top" title="doto 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Management" href="Management.html"/>
+        <link rel="prev" title="Droplets" href="Droplets.html"/>
+       
+        
+      <a href="https://github.com/ryan-roemer/sphinx-bootstrap-theme"
+         class="visible-desktop hidden-xs"><img
+        style="position: absolute; top: 38px; right: 0; border: 0;"
+        src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"
+        alt="Fork me on GitHub"></a>
+    
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="icon icon-home"> doto</a>
+        <form class="wy-form" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search docs" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Droplets.html">Droplets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Droplets.html#creating-droplets">Creating Droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Droplets.html#getting-a-specific-droplet">Getting a specific droplet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Droplets.html#getting-all-droplets">Getting all droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Droplets.html#droplet-api">Droplet API</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Images</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creating-snapshots">Creating Snapshots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-a-specific-image">Getting a specific image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-all-images">Getting all images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#image-api">Image API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Management.html">Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Management.html#digitalocean-api">DigitalOcean API</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="/">doto</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <ul class="wy-breadcrumbs">
+  <li><a href="index.html">Docs</a> &raquo;</li>
+  <li><a href="">Images</a></li>
+  
+</ul>
+<hr/>
+
+          
+  <div class="section" id="images">
+<h1>Images<a class="headerlink" href="#images" title="Permalink to this headline">¶</a></h1>
+<p>A droplet is created using a pre-defined <strong>Image</strong>.  Users can select from nearly 40
+<a class="reference internal" href="PublicImages.html"><em>Public Images</em></a> or from snapshots and backups previously created.</p>
+<div class="section" id="creating-snapshots">
+<h2>Creating Snapshots<a class="headerlink" href="#creating-snapshots" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">d0</span><span class="o">.</span><span class="n">create_snapshot</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;My New Snapshot&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-a-specific-image">
+<h2>Getting a specific image<a class="headerlink" href="#getting-a-specific-image" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">image</span> <span class="o">=</span> <span class="n">d0</span><span class="o">.</span><span class="n">get_image</span><span class="p">(</span><span class="mi">1860934</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-all-images">
+<h2>Getting all images<a class="headerlink" href="#getting-all-images" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">df_imgs</span> <span class="o">=</span> <span class="n">d0</span><span class="o">.</span><span class="n">get_all_images</span><span class="p">()</span>
+
+<span class="n">df_imgs</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">&#39;distribution&#39;</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">df_imgs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="image-api">
+<h2>Image API<a class="headerlink" href="#image-api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="doto.Image">
+<em class="property">class </em><tt class="descclassname">doto.</tt><tt class="descname">Image</tt><big>(</big><em>**kwds</em><big>)</big><a class="headerlink" href="#doto.Image" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="doto.Image.destroy">
+<tt class="descname">destroy</tt><big>(</big><em>image_id=None</em><big>)</big><a class="headerlink" href="#doto.Image.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method allows you to destroy an image.
+There is no way to restore a deleted image so be careful and ensure your data is properly backed up.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image_id</strong> (<em>int</em>) &#8211; The ID of the image</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Image.event_update">
+<tt class="descname">event_update</tt><big>(</big><big>)</big><a class="headerlink" href="#doto.Image.event_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to update Image (primarily used to update ip information)</p>
+<p><a class="reference external" href="https://api.digitalocean.com/events/[event_id]/">https://api.digitalocean.com/events/[event_id]/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Image.percentage_update">
+<tt class="descname">percentage_update</tt><big>(</big><big>)</big><a class="headerlink" href="#doto.Image.percentage_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to return the percentage of event completion</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Image.transfer_image">
+<tt class="descname">transfer_image</tt><big>(</big><em>region_id=None</em><big>)</big><a class="headerlink" href="#doto.Image.transfer_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method allows you to transfer an image to a specified region.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>image_id</strong> (<em>int</em>) &#8211; The ID of the image</li>
+<li><strong>region_id</strong> (<em>int</em>) &#8211; The ID of the region to which you would like to transfer.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          <footer>
+  
+    <div class="rst-footer-buttons">
+      
+        <a href="Management.html" class="btn btn-neutral float-right" title="Management"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="Droplets.html" class="btn btn-neutral" title="Droplets"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <p>
+      &copy; Copyright 2014, Benjamin Zaitlen.
+  </p>
+
+  <a href="https://www.github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="http://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+</body>
+</html>

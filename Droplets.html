@@ -1,0 +1,386 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Droplets &mdash; doto 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'./',
+        VERSION:'0.1',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+    <link rel="top" title="doto 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Images" href="Images.html"/>
+        <link rel="prev" title="doto: A Python interface to Digital Ocean" href="index.html"/>
+       
+        
+      <a href="https://github.com/ryan-roemer/sphinx-bootstrap-theme"
+         class="visible-desktop hidden-xs"><img
+        style="position: absolute; top: 38px; right: 0; border: 0;"
+        src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"
+        alt="Fork me on GitHub"></a>
+    
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="icon icon-home"> doto</a>
+        <form class="wy-form" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search docs" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Droplets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creating-droplets">Creating Droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-a-specific-droplet">Getting a specific droplet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-all-droplets">Getting all droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#droplet-api">Droplet API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Images.html">Images</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Images.html#creating-droplets">Creating Droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Images.html#getting-a-specific-droplet">Getting a specific droplet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Images.html#getting-all-droplets">Getting all droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Images.html#doto-droplet">doto.Droplet</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Management.html">Management</a></li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="/">doto</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <ul class="wy-breadcrumbs">
+  <li><a href="index.html">Docs</a> &raquo;</li>
+  <li><a href="">Droplets</a></li>
+  
+</ul>
+<hr/>
+
+          
+  <div class="section" id="droplets">
+<h1>Droplets<a class="headerlink" href="#droplets" title="Permalink to this headline">¶</a></h1>
+<p>Droplets are the atomic unit of of compute instances on the Digital Ocean cloud service.  They are available in a
+variety of RAM, HD, CPU configurations.</p>
+<div class="section" id="creating-droplets">
+<h2>Creating Droplets<a class="headerlink" href="#creating-droplets" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">droplet</span> <span class="o">=</span> <span class="n">d0</span><span class="o">.</span><span class="n">create_droplet</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;Random&#39;</span><span class="p">,</span>
+                            <span class="n">size_id</span><span class="o">=</span><span class="mi">66</span><span class="p">,</span> <span class="c">#512MB</span>
+                            <span class="n">image_id</span><span class="o">=</span><span class="mi">1341147</span><span class="p">,</span> <span class="c">#Docker 0.7 Ubuntu 13.04 x64</span>
+                            <span class="n">region_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="c">#New York</span>
+                            <span class="n">ssh_key_ids</span><span class="o">=</span><span class="p">[</span><span class="n">new_key</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]]</span>
+                            <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-a-specific-droplet">
+<h2>Getting a specific droplet<a class="headerlink" href="#getting-a-specific-droplet" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">droplet</span> <span class="o">=</span> <span class="n">d0</span><span class="o">.</span><span class="n">get_droplet</span><span class="p">(</span><span class="mi">923125</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-all-droplets">
+<h2>Getting all droplets<a class="headerlink" href="#getting-all-droplets" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">droplets</span> <span class="o">=</span> <span class="n">d0</span><span class="o">.</span><span class="n">get_all_droplets</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="droplet-api">
+<h2>Droplet API<a class="headerlink" href="#droplet-api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="doto.Droplet">
+<em class="property">class </em><tt class="descclassname">doto.</tt><tt class="descname">Droplet</tt><big>(</big><em>**kwds</em><big>)</big><a class="headerlink" href="#doto.Droplet" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="doto.Droplet.create_snapshot">
+<tt class="descname">create_snapshot</tt><big>(</big><em>name=None</em><big>)</big><a class="headerlink" href="#doto.Droplet.create_snapshot" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method allows you to take a snapshot of the droplet once it has been powered off,
+which can later be restored or used to create a new droplet from the same image.
+Please be aware this may cause a reboot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> &#8211; The NAME of the snapshot</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="https://api.digitalocean.com/droplets/[droplet_id]/snapshot/?name=[snapshot_name">https://api.digitalocean.com/droplets/[droplet_id]/snapshot/?name=[snapshot_name</a>]&amp;
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Droplet.destroy">
+<tt class="descname">destroy</tt><big>(</big><em>scrub_data=1</em><big>)</big><a class="headerlink" href="#doto.Droplet.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method destroys one of your droplets - this is irreversible.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scrub_data</strong> (<em>bool</em>) &#8211; An optional bool which will strictly write 0s to your prior</td>
+</tr>
+</tbody>
+</table>
+<p>partition to ensure that all data is completely erased. True by default</p>
+<p><a class="reference external" href="https://api.digitalocean.com/droplets/[droplet_id]/destroy/">https://api.digitalocean.com/droplets/[droplet_id]/destroy/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Droplet.event_update">
+<tt class="descname">event_update</tt><big>(</big><big>)</big><a class="headerlink" href="#doto.Droplet.event_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to update Droplet</p>
+<p><a class="reference external" href="https://api.digitalocean.com/events/[event_id]/">https://api.digitalocean.com/events/[event_id]/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Droplet.password_reset">
+<tt class="descname">password_reset</tt><big>(</big><big>)</big><a class="headerlink" href="#doto.Droplet.password_reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will reset the root password for a droplet.
+Please be aware that this will reboot the droplet to allow resetting the password.</p>
+<p><a class="reference external" href="https://api.digitalocean.com/droplets/[droplet_id]/password_reset/">https://api.digitalocean.com/droplets/[droplet_id]/password_reset/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Droplet.percentage_update">
+<tt class="descname">percentage_update</tt><big>(</big><big>)</big><a class="headerlink" href="#doto.Droplet.percentage_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to return the percentage of event completion</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Droplet.power_cycle">
+<tt class="descname">power_cycle</tt><big>(</big><big>)</big><a class="headerlink" href="#doto.Droplet.power_cycle" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method allows you to power cycle a droplet.
+This will turn off the droplet and then turn it back on.</p>
+<p><a class="reference external" href="https://api.digitalocean.com/droplets/[droplet_id]/power_cycle/">https://api.digitalocean.com/droplets/[droplet_id]/power_cycle/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Droplet.power_off">
+<tt class="descname">power_off</tt><big>(</big><big>)</big><a class="headerlink" href="#doto.Droplet.power_off" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method allows you to power off a droplet.
+This will turn off the droplet and then turn it back on.</p>
+<p><a class="reference external" href="https://api.digitalocean.com/droplets/[droplet_id]/power_off/">https://api.digitalocean.com/droplets/[droplet_id]/power_off/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Droplet.power_on">
+<tt class="descname">power_on</tt><big>(</big><big>)</big><a class="headerlink" href="#doto.Droplet.power_on" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method allows you to power on a previously powered off droplet.</p>
+<p><a class="reference external" href="https://api.digitalocean.com/droplets/[droplet_id]/power_on/">https://api.digitalocean.com/droplets/[droplet_id]/power_on/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Droplet.reboot">
+<tt class="descname">reboot</tt><big>(</big><big>)</big><a class="headerlink" href="#doto.Droplet.reboot" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method allows you to reboot a droplet.
+This is the preferred method to use if a server is not responding.</p>
+<p><a class="reference external" href="https://api.digitalocean.com/droplets/[droplet_id]/reboot/">https://api.digitalocean.com/droplets/[droplet_id]/reboot/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Droplet.rebuild">
+<tt class="descname">rebuild</tt><big>(</big><em>image_id=None</em><big>)</big><a class="headerlink" href="#doto.Droplet.rebuild" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method allows you to reinstall a droplet with a default image.
+This is useful if you want to start again but retain the same IP address for your droplet.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image_id</strong> (<em>int</em>) &#8211; ID of the image you would like to use to rebuild your droplet with</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="https://api.digitalocean.com/droplets/[droplet_id]/rebuild/?image_id=[image_id">https://api.digitalocean.com/droplets/[droplet_id]/rebuild/?image_id=[image_id</a>]&amp;
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Droplet.rename">
+<tt class="descname">rename</tt><big>(</big><em>name=None</em><big>)</big><a class="headerlink" href="#doto.Droplet.rename" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method renames the droplet to the specified name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>str</em>) &#8211; Name of the new droplet</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="https://api.digitalocean.com/droplets/[droplet_id]/rename/">https://api.digitalocean.com/droplets/[droplet_id]/rename/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]&amp;name=[name]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Droplet.resize">
+<tt class="descname">resize</tt><big>(</big><em>size=None</em><big>)</big><a class="headerlink" href="#doto.Droplet.resize" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method allows you to resize a specific droplet to a different size.
+This will affect the number of processors and memory allocated to the droplet.</p>
+<p>REQUIRES SNAPSHOT OF DROPLET</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em>int</em>) &#8211; The new SIZE id of the droplet</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="https://api.digitalocean.com/droplets/[droplet_id]/resize/?size_id=[size_id">https://api.digitalocean.com/droplets/[droplet_id]/resize/?size_id=[size_id</a>]&amp;
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Droplet.restore">
+<tt class="descname">restore</tt><big>(</big><em>image_id=None</em><big>)</big><a class="headerlink" href="#doto.Droplet.restore" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method allows you to restore a droplet with a previous image or snapshot.
+This will be a mirror copy of the image or snapshot to your droplet.
+Be sure you have backed up any necessary information prior to restore.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image_id</strong> (<em>int</em>) &#8211; ID of the image you would like to use to rebuild your droplet with</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="https://api.digitalocean.com/droplets/[droplet_id]/restore/?image_id=[image_id">https://api.digitalocean.com/droplets/[droplet_id]/restore/?image_id=[image_id</a>]&amp;
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Droplet.set_backups">
+<tt class="descname">set_backups</tt><big>(</big><em>flag=True</em><big>)</big><a class="headerlink" href="#doto.Droplet.set_backups" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method enables/disables automatic backups
+which run in the background daily to backup your droplet&#8217;s data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scrub_data</strong> &#8211; A bool which enables/disables backups</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="https://api.digitalocean.com/droplets/[droplet_id]/enable_backups/">https://api.digitalocean.com/droplets/[droplet_id]/enable_backups/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Droplet.shutdown">
+<tt class="descname">shutdown</tt><big>(</big><big>)</big><a class="headerlink" href="#doto.Droplet.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method allows you to shutdown a droplet.
+The droplet will remain in your account.</p>
+<p><a class="reference external" href="https://api.digitalocean.com/droplets/[droplet_id]/shutdown/">https://api.digitalocean.com/droplets/[droplet_id]/shutdown/</a>
+?client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Droplet.update">
+<tt class="descname">update</tt><big>(</big><big>)</big><a class="headerlink" href="#doto.Droplet.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to update Droplet (primarily used to update ip information and state changes)</p>
+<p><a class="reference external" href="https://api.digitalocean.com/events/[event_id]/">https://api.digitalocean.com/events/[event_id]/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          <footer>
+  
+    <div class="rst-footer-buttons">
+      
+        <a href="Images.html" class="btn btn-neutral float-right" title="Images"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="doto: A Python interface to Digital Ocean"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <p>
+      &copy; Copyright 2014, Benjamin Zaitlen.
+  </p>
+
+  <a href="https://www.github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="http://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+</body>
+</html>

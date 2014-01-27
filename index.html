@@ -1,59 +1,227 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Welcome to doto’s documentation! &mdash; doto 0.1 documentation</title>
-    
-    <link rel="stylesheet" href="_static/julia.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>doto: A Python interface to Digital Ocean &mdash; doto 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
+        URL_ROOT:'./',
+        VERSION:'0.1',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="doto 0.1 documentation" href="#" /> 
-  </head>
-  <body>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+    
+
   
-  <a href="https://github.com/ryan-roemer/sphinx-bootstrap-theme"
-     class="visible-desktop hidden-xs"><img
-    style="position: absolute; top: 38px; right: 0; border: 0;"
-    src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"
-    alt="Fork me on GitHub"></a>
 
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li><a href="#">doto 0.1 documentation</a>&nbsp;/&nbsp;</li> 
-      </ul>
-    </div>  
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
-            
-  <div class="section" id="welcome-to-doto-s-documentation">
-<h1>Welcome to doto&#8217;s documentation!<a class="headerlink" href="#welcome-to-doto-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Contents:</p>
-<div class="toctree-wrapper compound">
-<ul class="simple">
+  
+    <link rel="top" title="doto 0.1 documentation" href="#"/>
+        <link rel="next" title="Droplets" href="Droplets.html"/>
+       
+        
+      <a href="https://github.com/ryan-roemer/sphinx-bootstrap-theme"
+         class="visible-desktop hidden-xs"><img
+        style="position: absolute; top: 38px; right: 0; border: 0;"
+        src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"
+        alt="Fork me on GitHub"></a>
+    
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="#" class="icon icon-home"> doto</a>
+        <form class="wy-form" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search docs" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="Droplets.html">Droplets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Droplets.html#creating-droplets">Creating Droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Droplets.html#getting-a-specific-droplet">Getting a specific droplet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Droplets.html#getting-all-droplets">Getting all droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Droplets.html#droplet-api">Droplet API</a></li>
 </ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Images.html">Images</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Images.html#creating-snapshots">Creating Snapshots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Images.html#getting-a-specific-image">Getting a specific image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Images.html#getting-all-images">Getting all images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Images.html#image-api">Image API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Management.html">Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Management.html#digitalocean-api">DigitalOcean API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="PublicImages.html">Public Images</a></li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="/">doto</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <ul class="wy-breadcrumbs">
+  <li><a href="#">Docs</a> &raquo;</li>
+  <li><a href="">doto: A Python interface to Digital Ocean</a></li>
+  
+</ul>
+<hr/>
+
+          
+  <div class="section" id="doto-a-python-interface-to-digital-ocean">
+<h1>doto: A Python interface to Digital Ocean<a class="headerlink" href="#doto-a-python-interface-to-digital-ocean" title="Permalink to this headline">¶</a></h1>
+<p>DOTO is an open-source Python 2/3 interface to <a class="reference external" href="http://developers.digitalocean.com/">Digital Ocean&#8217;s API</a>.</p>
+<div class="section" id="installing">
+<h2>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h2>
+<p>You can install <tt class="docutils literal"><span class="pre">doto</span></tt> with <tt class="docutils literal"><span class="pre">conda</span></tt> or <tt class="docutils literal"><span class="pre">pip</span></tt>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> pip install doto
+<span class="gp">$</span> conda install doto
+</pre></div>
+</div>
+<p>Why yet another Python library for Digital Ocean?</p>
+<ul class="simple">
+<li>a</li>
+<li>b</li>
+<li>c</li>
+</ul>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>To get started with doto create a <strong>.dotorc</strong> file in a directory named, <strong>~/.doto</strong>, with your
+<strong>api_key</strong> and <strong>client_id</strong> listed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">Credentials</span><span class="p">]</span>
+<span class="n">client_id</span> <span class="o">=</span> <span class="n">XXXXXXXXXXXXX</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="mi">99999999999999999999999</span>
+</pre></div>
+</div>
+<p>You are now ready to use doto:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">doto</span>
+<span class="n">d0</span> <span class="o">=</span> <span class="n">doto</span><span class="o">.</span><span class="n">connect_d0</span><span class="p">()</span>
+
+<span class="n">new_key</span> <span class="o">=</span> <span class="n">d0</span><span class="o">.</span><span class="n">create_key_pair</span><span class="p">(</span><span class="s">&#39;my_new_key_pair&#39;</span><span class="p">)</span>
+<span class="n">droplet</span> <span class="o">=</span> <span class="n">d0</span><span class="o">.</span><span class="n">create_droplet</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;Random&#39;</span><span class="p">,</span>
+                            <span class="n">size_id</span><span class="o">=</span><span class="mi">66</span><span class="p">,</span> <span class="c">#512MB</span>
+                            <span class="n">image_id</span><span class="o">=</span><span class="mi">1341147</span><span class="p">,</span> <span class="c">#Docker 0.7 Ubuntu 13.04 x64</span>
+                            <span class="n">region_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="c">#New York</span>
+                            <span class="n">ssh_key_ids</span><span class="o">=</span><span class="p">[</span><span class="n">new_key</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]]</span>
+                            <span class="p">)</span>
+</pre></div>
+</div>
+<p>Doto is designed to support both Python 2.7 and Python 3.  A number of functions add a bit more than just returning
+json converted dicts.  For example:</p>
+<div class="highlight-python"><pre>In [1]: import doto
+
+In [2]: d0 = doto.connect_d0()
+
+In [3]: df_imgs = d0.get_all_images()
+&gt;&gt;&gt; Getting /images
+
+In [5]: df_imgs.tail()
+Out[5]:
+   distribution       id                                             name  \
+38       Ubuntu  1608711  Ruby on Rails on Ubuntu 12.10 (Nginx + Unicorn)
+39       CentOS  1646467                                   CentOS 6.5 x64
+40       CentOS  1646732                                   CentOS 6.5 x32
+41       Ubuntu  1687372                          Redmine on Ubuntu 12.04
+42       Ubuntu  1720819                                  GitLab 6.4.3 CE
+
+   public  slug
+38   True  None
+39   True  None
+40   True  None
+41   True  None
+42   True  None</pre>
+</div>
+<p>Pandas Dataframes &#8211; while a bit heavy &#8211; provide a nice interface for searching and sorting over.:</p>
+<div class="highlight-python"><pre>In [6]: df_imgs.sort('distribution',inplace=True)
+
+In [7]: df_imgs.head()
+Out[7]:
+   distribution      id                    name public  slug
+20   Arch Linux  361740  Arch Linux 2013.05 x32   True  None
+19   Arch Linux  350424  Arch Linux 2013.05 x64   True  None
+5        CentOS    1601          CentOS 5.8 x64   True  None
+26       CentOS  562354          CentOS 6.4 x64   True  None
+6        CentOS    1602          CentOS 5.8 x32   True  None</pre>
+</div>
+</div>
+</div>
+<div class="section" id="currently-supported-services">
+<h1>Currently Supported Services<a class="headerlink" href="#currently-supported-services" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Droplets.html">Droplets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Images.html">Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Management.html">Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PublicImages.html">Public Images</a></li>
+</ul>
+</div>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>python 2.7 and 3.x</li>
+<li>pandas (&gt;= 0.12)</li>
+<li>requests (&gt;=2.0.1)</li>
+<li>pycrypto (&gt;=2.6.1)</li>
+</ul>
+</div>
+<div class="section" id="release-notes">
+<h2>Release Notes<a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
@@ -66,32 +234,31 @@
 </div>
 
 
-          </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <table><tr><td>
-      <input type="text" name="q" /><input type="submit" value="Go" />
-      <!--<input type="hidden" name="check_keywords" value="yes" />-->
-      <!--<input type="hidden" name="area" value="default" />-->
-      </td></tr></table>
-    </form>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
+          <footer>
+  
+    <div class="rst-footer-buttons">
+      
+        <a href="Droplets.html" class="btn btn-neutral float-right" title="Droplets"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
     </div>
-<div class="footerwrapper">
-  <div class="footer">
-    
-    
-  </div>
-</div>
+  
 
-  </body>
+  <hr/>
+
+  <p>
+      &copy; Copyright 2014, Benjamin Zaitlen.
+  </p>
+
+  <a href="https://www.github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="http://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+</body>
 </html>

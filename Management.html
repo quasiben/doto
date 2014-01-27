@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Management &mdash; doto 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'./',
+        VERSION:'0.1',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+    <link rel="top" title="doto 0.1 documentation" href="index.html"/>
+        <link rel="prev" title="Images" href="Images.html"/>
+       
+        
+      <a href="https://github.com/ryan-roemer/sphinx-bootstrap-theme"
+         class="visible-desktop hidden-xs"><img
+        style="position: absolute; top: 38px; right: 0; border: 0;"
+        src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"
+        alt="Fork me on GitHub"></a>
+    
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="icon icon-home"> doto</a>
+        <form class="wy-form" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search docs" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Droplets.html">Droplets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Droplets.html#creating-droplets">Creating Droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Droplets.html#getting-a-specific-droplet">Getting a specific droplet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Droplets.html#getting-all-droplets">Getting all droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Droplets.html#droplet-api">Droplet API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Images.html">Images</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Images.html#creating-snapshots">Creating Snapshots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Images.html#getting-a-specific-image">Getting a specific image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Images.html#getting-all-images">Getting all images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Images.html#image-api">Image API</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#digitalocean-api">DigitalOcean API</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="/">doto</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <ul class="wy-breadcrumbs">
+  <li><a href="index.html">Docs</a> &raquo;</li>
+  <li><a href="">Management</a></li>
+  
+</ul>
+<hr/>
+
+          
+  <div class="section" id="management">
+<h1>Management<a class="headerlink" href="#management" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="digitalocean-api">
+<h2>DigitalOcean API<a class="headerlink" href="#digitalocean-api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="doto.connect_d0">
+<em class="property">class </em><tt class="descclassname">doto.</tt><tt class="descname">connect_d0</tt><big>(</big><em>path=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="doto.connect_d0.create_droplet">
+<tt class="descname">create_droplet</tt><big>(</big><em>name=None</em>, <em>size_id=None</em>, <em>image_id=None</em>, <em>region_id=None</em>, <em>ssh_key_ids=None</em>, <em>private_networking=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.create_droplet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a droplet</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>string</em>) &#8211; The NAME of the droplet (name will be used as a reference</td>
+</tr>
+</tbody>
+</table>
+<p>on D0&#8217;s servers)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size_id</strong> (<em>int</em>) &#8211; The ID corresponding to requested size of the image (see</td>
+</tr>
+</tbody>
+</table>
+<p>connect_d0.get_sizes)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image_id</strong> (<em>int</em>) &#8211; The ID corresponding to the requested image (see</td>
+</tr>
+</tbody>
+</table>
+<p>connect_d0.images)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>region_id</strong> (<em>int</em>) &#8211; The ID corresponding to the requested region (see</td>
+</tr>
+</tbody>
+</table>
+<p>connect_d0.region_id)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ssh_key_ids</strong> (<em>int</em>) &#8211; An optional list of comma separated IDs corresponding</td>
+</tr>
+</tbody>
+</table>
+<p>to the requested ssh_keys to be added to the server
+(see connect_d0.get_ssh_keys)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>private_networking</strong> (<em>int</em>) &#8211; An optional bool which enables a private network interface</td>
+</tr>
+</tbody>
+</table>
+<p>if the region supports private networking</p>
+<dl class="docutils">
+<dt>droplet = d0.create_droplet(name=&#8217;Random&#8217;,</dt>
+<dd>size_id=66, #512MB
+image_id=1341147, #Docker 0.7 Ubuntu 13.04 x64
+region_id=1, #New York
+ssh_key_ids=18669
+)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.connect_d0.create_key_pair">
+<tt class="descname">create_key_pair</tt><big>(</big><em>ssh_key_name=None</em>, <em>dry_run=False</em><big>)</big><a class="headerlink" href="#doto.connect_d0.create_key_pair" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to create a key pair and store the public key on Digital Ocean&#8217;s servers</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ssh_key_name</strong> (<em>string</em>) &#8211; The name of the new keypair</li>
+<li><strong>dry_run</strong> (<em>bool</em>) &#8211; Set to True if the operation should not actually run.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">dict</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Dictionary of SSH key info and local path</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="https://api.digitalocean.com/ssh_keys/new/?name=[ssh_key_name]&amp;ssh_pub_key=[ssh_public_key">https://api.digitalocean.com/ssh_keys/new/?name=[ssh_key_name]&amp;ssh_pub_key=[ssh_public_key</a>]&amp;
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.connect_d0.delete_key_pair">
+<tt class="descname">delete_key_pair</tt><big>(</big><em>ssh_key_id=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.delete_key_pair" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the SSH key from your account.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ssh_key_id</strong> (<em>int</em>) &#8211; The ID of the public key</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="https://api.digitalocean.com/ssh_keys/[ssh_key_id]/destroy/">https://api.digitalocean.com/ssh_keys/[ssh_key_id]/destroy/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.connect_d0.get_all_droplets">
+<tt class="descname">get_all_droplets</tt><big>(</big><em>status_check=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_all_droplets" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns all active droplets that are currently running in your account.
+All available API information is presented for each droplet.</p>
+<p><a class="reference external" href="https://api.digitalocean.com/droplets/">https://api.digitalocean.com/droplets/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of <a class="reference internal" href="Droplets.html#doto.Droplet" title="doto.Droplet"><tt class="xref py py-class docutils literal"><span class="pre">doto.Droplet</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.connect_d0.get_all_images">
+<tt class="descname">get_all_images</tt><big>(</big><em>status_check=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_all_images" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to get Digital Ocean&#8217;s list of public images
+and users current private images</p>
+<p>Data is converted to a Pandas&#8217;s data frame for easy reading and sorting
+<a class="reference external" href="https://api.digitalocean.com/sizes/?client_id=[your_client_id]&amp;api_key=[your_api_key">https://api.digitalocean.com/sizes/?client_id=[your_client_id]&amp;api_key=[your_api_key</a>]</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">df_imgs</span> <span class="o">=</span> <span class="n">d0</span><span class="o">.</span><span class="n">get_all_images</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">df_imgs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>or sort the images based on the distribution
+&gt;&gt;&gt; df_imgs.sort(&#8216;distribution&#8217;,inplace=True)
+&gt;&gt;&gt; df_imgs.head()</p>
+<p><a class="reference external" href="https://api.digitalocean.com/images/">https://api.digitalocean.com/images/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.connect_d0.get_all_regions">
+<tt class="descname">get_all_regions</tt><big>(</big><em>status_check=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_all_regions" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will return all the available regions within the DigitalOcean cloud.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">df_rgs</span> <span class="o">=</span> <span class="n">d0</span><span class="o">.</span><span class="n">get_all_regions</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">df_rgs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://api.digitalocean.com/sizes/">https://api.digitalocean.com/sizes/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.connect_d0.get_all_ssh_keys">
+<tt class="descname">get_all_ssh_keys</tt><big>(</big><em>status_check=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_all_ssh_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method lists all the available public SSH keys in
+your account that can be added to a droplet.</p>
+<p>Data is converted to a Pandas&#8217;s data frame for easy reading and sorting
+<a class="reference external" href="https://api.digitalocean.com/ssh_keys/?client_id=[your_client_id]&amp;api_key=[your_api_key">https://api.digitalocean.com/ssh_keys/?client_id=[your_client_id]&amp;api_key=[your_api_key</a>]</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">df_keys</span> <span class="o">=</span> <span class="n">d0</span><span class="o">.</span><span class="n">get_all_ssh_keys</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">df_keys</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://api.digitalocean.com/ssh_keys/">https://api.digitalocean.com/ssh_keys/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.connect_d0.get_domains">
+<tt class="descname">get_domains</tt><big>(</big><em>status_check=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_domains" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns all of your current domains.</p>
+<p>Data is converted to a Pandas&#8217;s data frame for easy reading and sorting</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">df_domains</span> <span class="o">=</span> <span class="n">d0</span><span class="o">.</span><span class="n">get_ssh_keys</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">df_domains</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://api.digitalocean.com/domains/">https://api.digitalocean.com/domains/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.connect_d0.get_droplet">
+<tt class="descname">get_droplet</tt><big>(</big><em>id=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_droplet" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns full information for a specific droplet ID that is passed in the URL.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) &#8211; ID of the droplet</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="https://api.digitalocean.com/droplets/[droplet_id">https://api.digitalocean.com/droplets/[droplet_id</a>]?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.connect_d0.get_image">
+<tt class="descname">get_image</tt><big>(</big><em>image_id=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method displays the attributes of an image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image_id</strong> (<em>int</em>) &#8211; The ID of the image</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="Images.html#doto.Image" title="doto.Image"><tt class="xref py py-class docutils literal"><span class="pre">doto.Image</span></tt></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The newly created <a class="reference internal" href="Images.html#doto.Image" title="doto.Image"><tt class="xref py py-class docutils literal"><span class="pre">doto.Image</span></tt></a>.</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="https://api.digitalocean.com/images/[image_id]/">https://api.digitalocean.com/images/[image_id]/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.connect_d0.get_sizes">
+<tt class="descname">get_sizes</tt><big>(</big><em>status_check=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_sizes" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns all the available sizes that can be used to create a droplet.</p>
+<p><a class="reference external" href="https://api.digitalocean.com/sizes/">https://api.digitalocean.com/sizes/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.connect_d0.get_ssh_key">
+<tt class="descname">get_ssh_key</tt><big>(</big><em>ssh_key_id=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_ssh_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the SSH key from your account.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ssh_key_id</strong> (<em>int</em>) &#8211; The ID of the public key</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="https://api.digitalocean.com/ssh_keys/[ssh_key_id]/destroy/">https://api.digitalocean.com/ssh_keys/[ssh_key_id]/destroy/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          <footer>
+  
+    <div class="rst-footer-buttons">
+      
+      
+        <a href="Images.html" class="btn btn-neutral" title="Images"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <p>
+      &copy; Copyright 2014, Benjamin Zaitlen.
+  </p>
+
+  <a href="https://www.github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="http://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+</body>
+</html>
