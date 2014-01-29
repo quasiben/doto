@@ -94,7 +94,15 @@ class connect_d0(d0mixin, object):
         # name=[droplet_name]&size_id=[size_id]&image_id=[image_id]&region_id=[region_id]&ssh_key_ids=
         # [ssh_key_id1],[ssh_key_id2]
 
-
+    def get_droplet_by_name(self, name):
+        """
+        Convenience method to make it easy to select a droplet by name
+        """
+        droplets = self.get_all_droplets()
+        for d in droplets:
+            if d.name == name:
+              return d
+        return None
 
 
     def get_all_droplets(self, status_check=None):
