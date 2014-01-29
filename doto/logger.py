@@ -7,9 +7,14 @@ from os.path import join as pjoin
 log = logging.getLogger('doto')
 log.setLevel(logging.DEBUG)
 
-#
+try:
+  os.path.expanduser('~')
+  expanduser = os.path.expanduser
+except (AttributeError, ImportError):
+  # This is probably running on App Engine.
+  expanduser = (lambda x: x)
 
-DOTO_DIR = '.doto'
+DOTO_DIR = pjoin(expanduser('~'),'.doto')
 DOTO_LOG_DIR = pjoin(DOTO_DIR,'doto-logs')
 now = datetime.datetime.utcnow().strftime('%Y-%m-%d')
 

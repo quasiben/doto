@@ -333,6 +333,10 @@ class connect_d0(d0mixin, object):
         Data is converted to a Pandas's data frame for easy reading and sorting
         https://api.digitalocean.com/sizes/?client_id=[your_client_id]&api_key=[your_api_key]
 
+        :rtype: :class:`pandas.DataFrame`
+        :return: Pandas DataFrame of all images.
+
+
         >>> df_imgs = d0.get_all_images()
         >>> print df_imgs.head()
 
