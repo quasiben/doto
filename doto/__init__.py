@@ -375,3 +375,35 @@ class connect_d0(d0mixin, object):
 
 
         return Image(**data['image'])
+
+    def get_all_images_filter(self, filter=None, status_check=None):
+        """
+        Convenience method to get Digital Ocean's list of public images
+        and users current private images
+
+        Data is converted to a Pandas's data frame for easy reading and sorting
+        https://api.digitalocean.com/sizes/?client_id=[your_client_id]&api_key=[your_api_key]
+
+        :rtype: :class:`pandas.DataFrame`
+        :return: Pandas DataFrame of all images.
+
+
+        >>> df_imgs = d0.get_all_images()
+        >>> print df_imgs.head()
+
+        or sort the images based on the distribution
+        >>> df_imgs.sort('distribution',inplace=True)
+        >>> df_imgs.head()
+
+        https://api.digitalocean.com/images/?
+        client_id=[your_client_id]&api_key=[your_api_key]
+        """
+
+        data = self._request("/images", status_check)
+
+        if status_check:
+            return data
+
+        if filters
+        df = pd.DataFrame.from_dict(data['images'])
+        return df
