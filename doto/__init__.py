@@ -1,6 +1,5 @@
 from __future__ import print_function, division, absolute_import
 import requests
-import pandas as pd
 
 from doto.logger import log
 from doto.config import Config
@@ -36,6 +35,40 @@ class connect_d0(d0mixin, object):
 
     def __repr__(self):
         return "D0:Connected"
+
+
+    def _attach_auth(self,items):
+        """
+        convenience method to attach client_id and api_key to
+        Image or Droplet object
+        """
+
+        for d in items:
+            #convert dictionary to droplet objects
+            d['_client_id'] = self._client_id
+            d['_api_key'] = self._api_key
+
+        return items
+
+    def _pprint_table(self, data):
+        """
+        pprint table: from stackoverflow:
+        http://stackoverflow.com/a/8356620
+        """
+
+        table = []
+        for d in data:
+            table.append([unicode(v) for v in d.values()])
+
+        header = d.keys()
+        table.insert(0,header)
+
+        col_width = [max(len(x) for x in col) for col in zip(*table)]
+        for line in table:
+            print("| " + " | ".join("{:{}}".format(x, col_width[i])
+                                    for i, x in enumerate(line)) + " |")
+
+
 
 
     def create_droplet(self,name=None,size_id=None,image_id=None,
@@ -105,7 +138,7 @@ class connect_d0(d0mixin, object):
         return None
 
 
-    def get_all_droplets(self, status_check=None):
+    def get_all_droplets(self,filters=None, raw_data=None, table=False):
         """
         This method returns all active droplets that are currently running in your account.
         All available API information is presented for each droplet.
@@ -119,20 +152,27 @@ class connect_d0(d0mixin, object):
 
 
         log.info("Get All Droplets")
-        data = self._request("/droplets",status_check)
+        data = self._request("/droplets",raw_data)
 
-        if status_check:
+        if raw_data:
             return data
 
-        #don't like this but will do for now
-        for drop in data['droplets']:
-            #convert dictionary to droplet objects
-            drop['_client_id'] = self._client_id
-            drop['_api_key'] = self._api_key
+        if table:
+            self._pprint_table(data['droplets'])
+            return
+
+        droplets = self._attach_auth(data['droplets'])
+
+        if filters:
+            droplets = [Droplet(**drop) for drop in droplets]
+            for k,v in filters.iteritems():
+                droplets = filter(lambda x: v in getattr(x,k), droplets)
+
+            return droplets
 
 
         #convert dictionary to droplet objects
-        return [Droplet(**drop) for drop in data['droplets']]
+        return [Droplet(**drop) for drop in droplets]
 
     def get_droplet(self, id=None):
         """
@@ -156,92 +196,98 @@ class connect_d0(d0mixin, object):
         return Droplet(**data['droplet'])
 
 
-    def get_sizes(self, status_check=None):
+    def get_sizes(self, raw_data=None):
         """
         This method returns all the available sizes that can be used to create a droplet.
 
+        :type raw_data: bool
+        :param raw_data: Set to True if you want the fetched dictionary
+
         https://api.digitalocean.com/sizes/?
         client_id=[your_client_id]&api_key=[your_api_key]
         """
 
-        data = self._request("/sizes", status_check)
+        data = self._request("/sizes", raw_data)
 
-        if status_check:
+        if raw_data:
             return data
 
-        df = pd.DataFrame.from_dict(data['sizes'])
-        df.sort(['cost_per_hour'],inplace=True)
-        return df
+        sizes = data['sizes']
+
+        if raw_data:
+            return data
+
+        self._pprint_table(sizes)
 
 
-    def get_all_regions(self,status_check=None):
+
+    def get_all_regions(self,raw_data=None):
         """
         This method will return all the available regions within the DigitalOcean cloud.
 
-        >>> df_rgs = d0.get_all_regions()
-        >>> print df_rgs.head()
+        :type raw_data: bool
+        :param raw_data: Set to True if you want the fetched dictionary
 
         https://api.digitalocean.com/sizes/?
         client_id=[your_client_id]&api_key=[your_api_key]
         """
 
-        data = self._request("/regions", status_check)
+        data = self._request("/regions", raw_data)
 
-        if status_check:
+        if raw_data:
             return data
 
-        df = pd.DataFrame.from_dict(data['regions'])
-        return df
+        regions = data['regions']
 
 
-    def get_domains(self, status_check=None):
+        self._pprint_table(regions)
+
+
+    def get_domains(self, raw_data=None):
         """
         This method returns all of your current domains.
 
-
-        Data is converted to a Pandas's data frame for easy reading and sorting
-
-        >>> df_domains = d0.get_ssh_keys()
-        >>> print df_domains.head()
+        :type raw_data: bool
+        :param raw_data: Set to True if you want the fetched dictionary
 
         https://api.digitalocean.com/domains/?
         client_id=[your_client_id]&api_key=[your_api_key]
         """
 
 
-        data = self._request("/domains", status_check)
-
-        if status_check:
+        data = self._request("/domains", raw_data)
+        if raw_data:
             return data
 
-        df = pd.DataFrame.from_dict(data['domains'])
-        return df
+        domains = data['domains']
+
+        self._pprint_table(domains)
 
 
-    def get_all_ssh_keys(self, status_check=None):
+
+
+    def get_all_ssh_keys(self, raw_data=None):
         """
         This method lists all the available public SSH keys in
         your account that can be added to a droplet.
 
 
-        Data is converted to a Pandas's data frame for easy reading and sorting
-        https://api.digitalocean.com/ssh_keys/?client_id=[your_client_id]&api_key=[your_api_key]
-
-        >>> df_keys = d0.get_all_ssh_keys()
-        >>> print df_keys.head()
+        :type raw_data: bool
+        :param raw_data: Set to True if you want the fetched dictionary
 
         https://api.digitalocean.com/ssh_keys/?
         client_id=[your_client_id]&api_key=[your_api_key]
         """
 
 
-        data = self._request("/ssh_keys", status_check)
+        data = self._request("/ssh_keys", raw_data)
 
-        if status_check:
-            return data
+        if raw_data:
+            return raw_data
 
-        df = pd.DataFrame.from_dict(data['ssh_keys'])
-        return df
+        sshkeys = data['ssh_keys']
+
+        self._pprint_table(sshkeys)
 
 
     def create_key_pair(self, ssh_key_name=None, dry_run=False):
@@ -325,36 +371,51 @@ class connect_d0(d0mixin, object):
 
         log.info(data)
 
-    def get_all_images(self, status_check=None):
+    def get_all_images(self, filters=None, raw_data=False, table=False):
         """
         Convenience method to get Digital Ocean's list of public images
         and users current private images
+        using EC2 style filtering
 
-        Data is converted to a Pandas's data frame for easy reading and sorting
         https://api.digitalocean.com/sizes/?client_id=[your_client_id]&api_key=[your_api_key]
 
-        :rtype: :class:`pandas.DataFrame`
-        :return: Pandas DataFrame of all images.
+        :type filters: dict
+        :param filters: Optional filters that can be used to limit the
+            results returned.  Filters are provided in the form of a
+            dictionary consisting of filter names as the key and
+            filter values as the value.  The set of allowable filter
+            names/values is dependent on the request being performed.
+            Check the DigitalOcean API guide for details.
 
+        :rtype: list
+        :return: A list of :class:`doto.Image` objects
 
-        >>> df_imgs = d0.get_all_images()
-        >>> print df_imgs.head()
-
-        or sort the images based on the distribution
-        >>> df_imgs.sort('distribution',inplace=True)
-        >>> df_imgs.head()
 
         https://api.digitalocean.com/images/?
         client_id=[your_client_id]&api_key=[your_api_key]
         """
 
-        data = self._request("/images", status_check)
+        data = self._request("/images", raw_data)
 
-        if status_check:
+        if raw_data:
             return data
 
-        df = pd.DataFrame.from_dict(data['images'])
-        return df
+        if table:
+            self._pprint_table(data['images'])
+            return
+
+        images = self._attach_auth(data['images'])
+
+        if filters:
+            images = [Image(**img) for img in images]
+            for k,v in filters.iteritems():
+                images = filter(lambda x: v in getattr(x,k), images)
+
+            return images
+
+        #convert dictionary to Image objects
+        return [Image(**img) for img in images]
+
 
     def get_image(self, image_id=None):
         """
@@ -383,34 +444,3 @@ class connect_d0(d0mixin, object):
 
 
         return Image(**data['image'])
-
-    def get_all_images_filter(self, filter=None, status_check=None):
-        """
-        Convenience method to get Digital Ocean's list of public images
-        and users current private images
-
-        Data is converted to a Pandas's data frame for easy reading and sorting
-        https://api.digitalocean.com/sizes/?client_id=[your_client_id]&api_key=[your_api_key]
-
-        :rtype: :class:`pandas.DataFrame`
-        :return: Pandas DataFrame of all images.
-
-
-        >>> df_imgs = d0.get_all_images()
-        >>> print df_imgs.head()
-
-        or sort the images based on the distribution
-        >>> df_imgs.sort('distribution',inplace=True)
-        >>> df_imgs.head()
-
-        https://api.digitalocean.com/images/?
-        client_id=[your_client_id]&api_key=[your_api_key]
-        """
-
-        data = self._request("/images", status_check)
-
-        if status_check:
-            return data
-
-        df = pd.DataFrame.from_dict(data['images'])
-        return df
