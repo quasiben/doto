@@ -412,6 +412,5 @@ class connect_d0(d0mixin, object):
         if status_check:
             return data
 
-        if filters
         df = pd.DataFrame.from_dict(data['images'])
         return df
