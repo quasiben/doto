@@ -274,13 +274,13 @@ class connect_d0(d0mixin, object):
         with open(keyfile+'_rsa.pub','w') as f:
             f.write(key.exportKey('OpenSSH'))
         public_key = key.exportKey('OpenSSH')
-        os.chmod(keyfile+'_rsa.pub', 0600)
+        os.chmod(keyfile+'_rsa.pub', 0o0600)
 
         #private key
         with open(keyfile+'_rsa','w') as f:
             f.write(key.exportKey())
 
-        os.chmod(keyfile+'_rsa', 0600)
+        os.chmod(keyfile+'_rsa', 0o0600)
 
         data = self._request("/ssh_keys/new/", name=ssh_key_name,
                              ssh_pub_key=public_key)
