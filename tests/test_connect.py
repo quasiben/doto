@@ -17,3 +17,8 @@ class TestConfig(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+droplet.power_off()
+while droplet.event_status != 'done':
+    droplet.event_update()

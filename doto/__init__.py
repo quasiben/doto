@@ -23,9 +23,14 @@ del get_versions
 
 BASEURL = "https://api.digitalocean.com"
 
-class connect_d0(d0mixin, object):
+class connect_d0(d0mixin):
 
-    def __init__(self, path=None):
+    def __init__(self, path=None,debug=True):
+
+        #logging is off when log.disabled is set to True
+        if not debug:
+            log.disabled = True
+
         config = Config(path)
         self._client_id = config.get('Credentials','client_id')
         self._api_key = config.get('Credentials','api_key')
@@ -35,6 +40,18 @@ class connect_d0(d0mixin, object):
 
     def __repr__(self):
         return "D0:Connected"
+
+    def _set_logging(self,debug=True):
+        """
+        Convenience function to set logging on/off
+        """
+
+        #logging is off when log.disabled is set to True
+        if not debug:
+            log.disabled = True
+
+        else:
+            log.disabled = False
 
 
     def _attach_auth(self,items):
@@ -121,8 +138,13 @@ class connect_d0(d0mixin, object):
         #don't like this but will do for now
         data['droplet']['_client_id'] = self._client_id
         data['droplet']['_api_key'] = self._api_key
+        droplet = Droplet(**data['droplet'])
 
-        return Droplet(**data['droplet'])
+        droplet.update()
+        droplet.event_update()
+
+        return droplet
+
         # https://api.digitalocean.com/droplets/new?client_id=[your_client_id]&api_key=[your_api_key]&
         # name=[droplet_name]&size_id=[size_id]&image_id=[image_id]&region_id=[region_id]&ssh_key_ids=
         # [ssh_key_id1],[ssh_key_id2]
@@ -138,7 +160,7 @@ class connect_d0(d0mixin, object):
         return None
 
 
-    def get_all_droplets(self,filters=None, raw_data=None, table=False):
+    def get_all_droplets(self,filters=None, status_check=None, table=False):
         """
         This method returns all active droplets that are currently running in your account.
         All available API information is presented for each droplet.
@@ -152,9 +174,9 @@ class connect_d0(d0mixin, object):
 
 
         log.info("Get All Droplets")
-        data = self._request("/droplets",raw_data)
+        data = self._request("/droplets",status_check)
 
-        if raw_data:
+        if status_check:
             return data
 
         if table:
@@ -196,99 +218,89 @@ class connect_d0(d0mixin, object):
         return Droplet(**data['droplet'])
 
 
-    def get_sizes(self, raw_data=None):
+    def get_sizes(self,status_check=None, table=False):
         """
         This method returns all the available sizes that can be used to create a droplet.
 
-        :type raw_data: bool
-        :param raw_data: Set to True if you want the fetched dictionary
 
         https://api.digitalocean.com/sizes/?
         client_id=[your_client_id]&api_key=[your_api_key]
         """
 
-        data = self._request("/sizes", raw_data)
+        data = self._request("/sizes", status_check)
 
-        if raw_data:
+        if status_check:
             return data
 
         sizes = data['sizes']
+        if table:
+            self._pprint_table(sizes)
 
-        if raw_data:
-            return data
-
-        self._pprint_table(sizes)
-
+        return sizes
 
 
-    def get_all_regions(self,raw_data=None):
+    def get_all_regions(self,status_check=None, table=False):
         """
         This method will return all the available regions within the DigitalOcean cloud.
-
-        :type raw_data: bool
-        :param raw_data: Set to True if you want the fetched dictionary
 
         https://api.digitalocean.com/sizes/?
         client_id=[your_client_id]&api_key=[your_api_key]
         """
 
-        data = self._request("/regions", raw_data)
+        data = self._request("/regions", status_check)
 
-        if raw_data:
+        if status_check:
             return data
 
         regions = data['regions']
 
 
-        self._pprint_table(regions)
+        if table:
+            self._pprint_table(regions)
 
+        return  regions
 
-    def get_domains(self, raw_data=None):
+    def get_domains(self, status_check=None, table=False):
         """
         This method returns all of your current domains.
-
-        :type raw_data: bool
-        :param raw_data: Set to True if you want the fetched dictionary
 
         https://api.digitalocean.com/domains/?
         client_id=[your_client_id]&api_key=[your_api_key]
         """
 
 
-        data = self._request("/domains", raw_data)
-        if raw_data:
+        data = self._request("/domains", status_check)
+        if status_check:
             return data
 
         domains = data['domains']
 
-        self._pprint_table(domains)
+        if table:
+            self._pprint_table(domains)
 
+        return domains
 
-
-
-    def get_all_ssh_keys(self, raw_data=None):
+    def get_all_ssh_keys(self, status_check=None, table=False):
         """
         This method lists all the available public SSH keys in
         your account that can be added to a droplet.
-
-
-        :type raw_data: bool
-        :param raw_data: Set to True if you want the fetched dictionary
 
         https://api.digitalocean.com/ssh_keys/?
         client_id=[your_client_id]&api_key=[your_api_key]
         """
 
 
-        data = self._request("/ssh_keys", raw_data)
+        data = self._request("/ssh_keys", status_check)
 
-        if raw_data:
-            return raw_data
+        if status_check:
+            return data
 
         sshkeys = data['ssh_keys']
 
-        self._pprint_table(sshkeys)
+        if table:
+            self._pprint_table(sshkeys)
 
+        return sshkeys
 
     def create_key_pair(self, ssh_key_name=None, dry_run=False):
         """
@@ -371,7 +383,7 @@ class connect_d0(d0mixin, object):
 
         log.info(data)
 
-    def get_all_images(self, filters=None, raw_data=False, table=False):
+    def get_all_images(self, filters=None, status_check=False, table=False):
         """
         Convenience method to get Digital Ocean's list of public images
         and users current private images
@@ -395,9 +407,9 @@ class connect_d0(d0mixin, object):
         client_id=[your_client_id]&api_key=[your_api_key]
         """
 
-        data = self._request("/images", raw_data)
+        data = self._request("/images", status_check)
 
-        if raw_data:
+        if status_check:
             return data
 
         if table:
