@@ -44,15 +44,8 @@
 
   
     <link rel="top" title="doto 0.1 documentation" href="index.html"/>
-        <link rel="prev" title="Images" href="Images.html"/>
-       
-        
-      <a href="https://github.com/ryan-roemer/sphinx-bootstrap-theme"
-         class="visible-desktop hidden-xs"><img
-        style="position: absolute; top: 38px; right: 0; border: 0;"
-        src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"
-        alt="Fork me on GitHub"></a>
-    
+        <link rel="next" title="Public Images" href="PublicImages.html"/>
+        <link rel="prev" title="Images" href="Images.html"/> 
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
@@ -95,6 +88,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#digitalocean-api">DigitalOcean API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="PublicImages.html">Public Images</a></li>
 </ul>
 
         
@@ -128,7 +122,7 @@
 <h2>DigitalOcean API<a class="headerlink" href="#digitalocean-api" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="doto.connect_d0">
-<em class="property">class </em><tt class="descclassname">doto.</tt><tt class="descname">connect_d0</tt><big>(</big><em>path=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">doto.</tt><tt class="descname">connect_d0</tt><big>(</big><em>path=None</em>, <em>debug=True</em><big>)</big><a class="headerlink" href="#doto.connect_d0" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="doto.connect_d0.create_droplet">
 <tt class="descname">create_droplet</tt><big>(</big><em>name=None</em>, <em>size_id=None</em>, <em>image_id=None</em>, <em>region_id=None</em>, <em>ssh_key_ids=None</em>, <em>private_networking=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.create_droplet" title="Permalink to this definition">¶</a></dt>
@@ -242,7 +236,7 @@ client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
 
 <dl class="method">
 <dt id="doto.connect_d0.get_all_droplets">
-<tt class="descname">get_all_droplets</tt><big>(</big><em>status_check=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_all_droplets" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_all_droplets</tt><big>(</big><em>filters=None</em>, <em>status_check=None</em>, <em>table=False</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_all_droplets" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns all active droplets that are currently running in your account.
 All available API information is presented for each droplet.</p>
 <p><a class="reference external" href="https://api.digitalocean.com/droplets/">https://api.digitalocean.com/droplets/</a>?
@@ -261,58 +255,53 @@ client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
 
 <dl class="method">
 <dt id="doto.connect_d0.get_all_images">
-<tt class="descname">get_all_images</tt><big>(</big><em>status_check=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_all_images" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_all_images</tt><big>(</big><em>filters=None</em>, <em>status_check=False</em>, <em>table=False</em>, <em>raw_data=False</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_all_images" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method to get Digital Ocean&#8217;s list of public images
-and users current private images</p>
-<p>Data is converted to a Pandas&#8217;s data frame for easy reading and sorting
-<a class="reference external" href="https://api.digitalocean.com/sizes/?client_id=[your_client_id]&amp;api_key=[your_api_key">https://api.digitalocean.com/sizes/?client_id=[your_client_id]&amp;api_key=[your_api_key</a>]</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">df_imgs</span> <span class="o">=</span> <span class="n">d0</span><span class="o">.</span><span class="n">get_all_images</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">df_imgs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>or sort the images based on the distribution
-&gt;&gt;&gt; df_imgs.sort(&#8216;distribution&#8217;,inplace=True)
-&gt;&gt;&gt; df_imgs.head()</p>
+and users current private images
+using EC2 style filtering</p>
+<p><a class="reference external" href="https://api.digitalocean.com/sizes/?client_id=[your_client_id]&amp;api_key=[your_api_key">https://api.digitalocean.com/sizes/?client_id=[your_client_id]&amp;api_key=[your_api_key</a>]</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filters</strong> (<em>dict</em>) &#8211; Optional filters that can be used to limit the
+results returned.  Filters are provided in the form of a
+dictionary consisting of filter names as the key and
+filter values as the value.  The set of allowable filter
+names/values is dependent on the request being performed.
+Check the DigitalOcean API guide for details.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of <a class="reference internal" href="Images.html#doto.Image" title="doto.Image"><tt class="xref py py-class docutils literal"><span class="pre">doto.Image</span></tt></a> objects</td>
+</tr>
+</tbody>
+</table>
 <p><a class="reference external" href="https://api.digitalocean.com/images/">https://api.digitalocean.com/images/</a>?
 client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="doto.connect_d0.get_all_regions">
-<tt class="descname">get_all_regions</tt><big>(</big><em>status_check=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_all_regions" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_all_regions</tt><big>(</big><em>status_check=None</em>, <em>table=False</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_all_regions" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method will return all the available regions within the DigitalOcean cloud.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">df_rgs</span> <span class="o">=</span> <span class="n">d0</span><span class="o">.</span><span class="n">get_all_regions</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">df_rgs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
 <p><a class="reference external" href="https://api.digitalocean.com/sizes/">https://api.digitalocean.com/sizes/</a>?
 client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="doto.connect_d0.get_all_ssh_keys">
-<tt class="descname">get_all_ssh_keys</tt><big>(</big><em>status_check=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_all_ssh_keys" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_all_ssh_keys</tt><big>(</big><em>status_check=None</em>, <em>table=False</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_all_ssh_keys" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method lists all the available public SSH keys in
 your account that can be added to a droplet.</p>
-<p>Data is converted to a Pandas&#8217;s data frame for easy reading and sorting
-<a class="reference external" href="https://api.digitalocean.com/ssh_keys/?client_id=[your_client_id]&amp;api_key=[your_api_key">https://api.digitalocean.com/ssh_keys/?client_id=[your_client_id]&amp;api_key=[your_api_key</a>]</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">df_keys</span> <span class="o">=</span> <span class="n">d0</span><span class="o">.</span><span class="n">get_all_ssh_keys</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">df_keys</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
 <p><a class="reference external" href="https://api.digitalocean.com/ssh_keys/">https://api.digitalocean.com/ssh_keys/</a>?
 client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="doto.connect_d0.get_domains">
-<tt class="descname">get_domains</tt><big>(</big><em>status_check=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_domains" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_domains</tt><big>(</big><em>status_check=None</em>, <em>table=False</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_domains" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns all of your current domains.</p>
-<p>Data is converted to a Pandas&#8217;s data frame for easy reading and sorting</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">df_domains</span> <span class="o">=</span> <span class="n">d0</span><span class="o">.</span><span class="n">get_ssh_keys</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">df_domains</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
 <p><a class="reference external" href="https://api.digitalocean.com/domains/">https://api.digitalocean.com/domains/</a>?
 client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
 </dd></dl>
@@ -331,6 +320,12 @@ client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
 </table>
 <p><a class="reference external" href="https://api.digitalocean.com/droplets/[droplet_id">https://api.digitalocean.com/droplets/[droplet_id</a>]?
 client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.connect_d0.get_droplet_by_name">
+<tt class="descname">get_droplet_by_name</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_droplet_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to make it easy to select a droplet by name</p>
 </dd></dl>
 
 <dl class="method">
@@ -355,7 +350,7 @@ client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
 
 <dl class="method">
 <dt id="doto.connect_d0.get_sizes">
-<tt class="descname">get_sizes</tt><big>(</big><em>status_check=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_sizes" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_sizes</tt><big>(</big><em>status_check=None</em>, <em>table=False</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_sizes" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns all the available sizes that can be used to create a droplet.</p>
 <p><a class="reference external" href="https://api.digitalocean.com/sizes/">https://api.digitalocean.com/sizes/</a>?
 client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
@@ -386,6 +381,8 @@ client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
           <footer>
   
     <div class="rst-footer-buttons">
+      
+        <a href="PublicImages.html" class="btn btn-neutral float-right" title="Public Images"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="Images.html" class="btn btn-neutral" title="Images"><span class="icon icon-circle-arrow-left"></span> Previous</a>

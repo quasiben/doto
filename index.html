@@ -44,15 +44,7 @@
 
   
     <link rel="top" title="doto 0.1 documentation" href="#"/>
-        <link rel="next" title="Droplets" href="Droplets.html"/>
-       
-        
-      <a href="https://github.com/ryan-roemer/sphinx-bootstrap-theme"
-         class="visible-desktop hidden-xs"><img
-        style="position: absolute; top: 38px; right: 0; border: 0;"
-        src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"
-        alt="Fork me on GitHub"></a>
-    
+        <link rel="next" title="Droplets" href="Droplets.html"/> 
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
@@ -135,9 +127,9 @@
 </div>
 <p>Why yet another Python library for Digital Ocean?</p>
 <ul class="simple">
-<li>a</li>
-<li>b</li>
-<li>c</li>
+<li>Logging</li>
+<li>boto like interface</li>
+<li>Optionally formatted tables for inline exploration</li>
 </ul>
 </div>
 <div class="section" id="getting-started">
@@ -163,41 +155,51 @@
 </pre></div>
 </div>
 <p>Doto is designed to support both Python 2.7 and Python 3.  A number of functions add a bit more than just returning
-json converted dicts.  For example:</p>
+json converted dicts.  For example, <strong>Images</strong> and <strong>Droplets</strong> are objects within doto where data such as, event_id,
+ip_address, status, etc. are stored as attributes with respect to the individual object:</p>
 <div class="highlight-python"><pre>In [1]: import doto
-
+d0
 In [2]: d0 = doto.connect_d0()
 
-In [3]: df_imgs = d0.get_all_images()
+In [22]: images = d0.get_all_images()
 &gt;&gt;&gt; Getting /images
 
-In [5]: df_imgs.tail()
-Out[5]:
-   distribution       id                                             name  \
-38       Ubuntu  1608711  Ruby on Rails on Ubuntu 12.10 (Nginx + Unicorn)
-39       CentOS  1646467                                   CentOS 6.5 x64
-40       CentOS  1646732                                   CentOS 6.5 x32
-41       Ubuntu  1687372                          Redmine on Ubuntu 12.04
-42       Ubuntu  1720819                                  GitLab 6.4.3 CE
-
-   public  slug
-38   True  None
-39   True  None
-40   True  None
-41   True  None
-42   True  None</pre>
+In [23]: images
+Out[23]:
+[Image:490208,
+ Image:568111,
+ Image:633923,
+ Image:714697,
+ Image:1420886,
+ Image:1898676,
+ Image:2003826,...]</pre>
 </div>
-<p>Pandas Dataframes &#8211; while a bit heavy &#8211; provide a nice interface for searching and sorting over.:</p>
-<div class="highlight-python"><pre>In [6]: df_imgs.sort('distribution',inplace=True)
+<p>Additionally, doto supports filtering on valid keys:</p>
+<div class="highlight-python"><pre>In [3]: filters = {'distribution':u'CentOS','name':'x64'}
 
-In [7]: df_imgs.head()
-Out[7]:
-   distribution      id                    name public  slug
-20   Arch Linux  361740  Arch Linux 2013.05 x32   True  None
-19   Arch Linux  350424  Arch Linux 2013.05 x64   True  None
-5        CentOS    1601          CentOS 5.8 x64   True  None
-26       CentOS  562354          CentOS 6.4 x64   True  None
-6        CentOS    1602          CentOS 5.8 x32   True  None</pre>
+In [4]: images = d0.get_all_images(filters=filters)
+&gt;&gt;&gt; Getting /images
+
+In [5]: for img in images:
+    print img.distribution, img.name, img.id
+   ...:
+CentOS CentOS 5.8 x64 1601
+CentOS CentOS 6.4 x64 562354
+CentOS CentOS 6.5 x64 1646467</pre>
+</div>
+<p>To view information inline, users can provide an optional <strong>Table=True</strong> argument for a well formatted table:</p>
+<div class="highlight-python"><pre>In [3]: d0.get_all_images(table=True)
+&gt;&gt;&gt; Getting /images
+| Ubuntu       | None | True   | 1505699 | Ubuntu 13.10 x64                                |
+| Ubuntu       | None | True   | 1608711 | Ruby on Rails on Ubuntu 12.10 (Nginx + Unicorn) |
+| CentOS       | None | True   | 1646467 | CentOS 6.5 x64                                  |
+| CentOS       | None | True   | 1646732 | CentOS 6.5 x32                                  |
+| Ubuntu       | None | True   | 1687372 | Redmine on Ubuntu 12.04                         |
+| Ubuntu       | None | True   | 1860934 | Ghost 0.4.0 on Ubuntu 12.04                     |
+| Ubuntu       | None | True   | 2105243 | GitLab 6.5.1 CE                                 |
+| Ubuntu       | None | True   | 2118237 | Dokku-v0.2.1 on Ubuntu 13.04                    |
+| Ubuntu       | None | True   | 2158507 | Docker 0.8 Ubuntu 13.04 x64                     |
+...</pre>
 </div>
 </div>
 </div>
@@ -214,7 +216,6 @@ Out[7]:
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>python 2.7 and 3.x</li>
 <li>pandas (&gt;= 0.12)</li>
 <li>requests (&gt;=2.0.1)</li>
 <li>pycrypto (&gt;=2.6.1)</li>

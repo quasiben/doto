@@ -45,15 +45,7 @@
   
     <link rel="top" title="doto 0.1 documentation" href="index.html"/>
         <link rel="next" title="Management" href="Management.html"/>
-        <link rel="prev" title="Droplets" href="Droplets.html"/>
-       
-        
-      <a href="https://github.com/ryan-roemer/sphinx-bootstrap-theme"
-         class="visible-desktop hidden-xs"><img
-        style="position: absolute; top: 38px; right: 0; border: 0;"
-        src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"
-        alt="Fork me on GitHub"></a>
-    
+        <link rel="prev" title="Droplets" href="Droplets.html"/> 
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
@@ -96,6 +88,7 @@
 <li class="toctree-l2"><a class="reference internal" href="Management.html#digitalocean-api">DigitalOcean API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="PublicImages.html">Public Images</a></li>
 </ul>
 
         
@@ -129,22 +122,40 @@
 <a class="reference internal" href="PublicImages.html"><em>Public Images</em></a> or from snapshots and backups previously created.</p>
 <div class="section" id="creating-snapshots">
 <h2>Creating Snapshots<a class="headerlink" href="#creating-snapshots" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">d0</span><span class="o">.</span><span class="n">create_snapshot</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;My New Snapshot&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="go">&gt;&gt;&gt;d0.create_snapshot(name=&#39;My New Snapshot&#39;)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="getting-a-specific-image">
 <h2>Getting a specific image<a class="headerlink" href="#getting-a-specific-image" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">image</span> <span class="o">=</span> <span class="n">d0</span><span class="o">.</span><span class="n">get_image</span><span class="p">(</span><span class="mi">1860934</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="go">&gt;&gt;&gt;images = d0.get_image(1860934)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="getting-all-images">
 <h2>Getting all images<a class="headerlink" href="#getting-all-images" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">df_imgs</span> <span class="o">=</span> <span class="n">d0</span><span class="o">.</span><span class="n">get_all_images</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="go">&gt;&gt;&gt;images = d0.get_all_images()</span>
 
-<span class="n">df_imgs</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">&#39;distribution&#39;</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="k">print</span> <span class="n">df_imgs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="go">&gt;&gt;&gt;images</span>
+<span class="go">[Image:490208,</span>
+<span class="go"> Image:568111,</span>
+<span class="go"> Image:633923,</span>
+<span class="go"> Image:714697,</span>
+<span class="go"> Image:1420886,</span>
+<span class="go"> Image:1898676,</span>
+<span class="go"> Image:2003826,...]</span>
+
+<span class="go">&gt;&gt;&gt;d0.get_all_images(table=True)</span>
+<span class="go">| Ubuntu       | None | True   | 1505699 | Ubuntu 13.10 x64                                |</span>
+<span class="go">| Ubuntu       | None | True   | 1608711 | Ruby on Rails on Ubuntu 12.10 (Nginx + Unicorn) |</span>
+<span class="go">| CentOS       | None | True   | 1646467 | CentOS 6.5 x64                                  |</span>
+<span class="go">| CentOS       | None | True   | 1646732 | CentOS 6.5 x32                                  |</span>
+<span class="go">| Ubuntu       | None | True   | 1687372 | Redmine on Ubuntu 12.04                         |</span>
+<span class="go">| Ubuntu       | None | True   | 1860934 | Ghost 0.4.0 on Ubuntu 12.04                     |</span>
+<span class="go">| Ubuntu       | None | True   | 2105243 | GitLab 6.5.1 CE                                 |</span>
+<span class="go">| Ubuntu       | None | True   | 2118237 | Dokku-v0.2.1 on Ubuntu 13.04                    |</span>
+<span class="go">| Ubuntu       | None | True   | 2158507 | Docker 0.8 Ubuntu 13.04 x64                     |</span>
+<span class="gp">...</span>
 </pre></div>
 </div>
 </div>
