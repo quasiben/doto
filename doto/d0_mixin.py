@@ -43,5 +43,6 @@ class d0mixin(object):
                 return data
             else:
                 #error
+                data = response.json()
                 error = "Status code: %d MSG: %s" % (response.status_code, data['message'])
                 raise DOError(error)

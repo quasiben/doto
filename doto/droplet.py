@@ -6,7 +6,7 @@ from doto.d0_mixin import d0mixin
 import requests
 
 
-class Droplet(d0mixin, object):
+class Droplet(d0mixin):
 
     def __str__(self):
         return ("Droplet:%s") % (self.id)
@@ -80,7 +80,7 @@ class Droplet(d0mixin, object):
         log.info("Renaming: %d To: %s Event: %d" % (self.id, name, self.event_id))
         self.update()
 
-    def rebuild(self, image_id=None):
+    def rebuild(self, image_id=None,use_current=False):
 
         """
         This method allows you to reinstall a droplet with a default image.
@@ -91,10 +91,15 @@ class Droplet(d0mixin, object):
         :type image_id: int
         :param image_id: ID of the image you would like to use to rebuild your droplet with
 
+        :type use_current: BOOL
+        :param use_current: Use the current image_id of the droplet during rebuild process
+
         https://api.digitalocean.com/droplets/[droplet_id]/rebuild/?image_id=[image_id]&
         client_id=[your_client_id]&api_key=[your_api_key]
         """
 
+        if use_current:
+            image_id = self.image_id
 
         url = "/droplets/%s/rebuild" % (str(self.id))
 
@@ -102,8 +107,8 @@ class Droplet(d0mixin, object):
 
         self.event_id = data['event_id']
 
-        log.info("Rebuild: %d With: %d Event: %d" % (self.id, image_id, self.event_id))
         self.update()
+        log.info("Rebuild: %d With: %d Event: %d" % (self.id, image_id, self.event_id))
 
     def restore(self, image_id=None):
 
