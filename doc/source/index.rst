@@ -71,7 +71,7 @@ ip_address, status, etc. are stored as attributes with respect to the individual
      Image:1898676,
      Image:2003826,...]
 
-Additionally, doto support filtering on valid keys::
+Additionally, doto supports filtering on valid keys::
 
     In [3]: filters = {'distribution':u'CentOS','name':'x64'}
 
