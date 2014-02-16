@@ -12,7 +12,7 @@ install:
 
   # Install dependencies
   - sudo conda init
-  - conda create -p $HOME/py -c https://conda.binstar.org/quasiben --yes nose flask pytables pandas numpy requests pycrypto "python=$TRAVIS_PYTHON_VERSION"
+  - conda create -p $HOME/py -c https://conda.binstar.org/quasiben --yes nose requests pycrypto "python=$TRAVIS_PYTHON_VERSION"
   - export PATH=$HOME/py/bin:$PATH
   - conda install --yes -n $HOME/py pip
   - pip install git+https://github.com/quasiben/doto.git

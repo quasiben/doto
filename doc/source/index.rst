@@ -21,9 +21,9 @@ You can install ``doto`` with ``conda`` or ``pip``:
 
 Why yet another Python library for Digital Ocean?
 
-* a
-* b
-* c
+* Logging
+* boto like interface
+* Optionally formatted tables for inline exploration
 
 Getting Started
 ---------------
@@ -50,43 +50,56 @@ You are now ready to use doto::
 
 
 Doto is designed to support both Python 2.7 and Python 3.  A number of functions add a bit more than just returning
-json converted dicts.  For example::
+json converted dicts.  For example, **Images** and **Droplets** are objects within doto where data such as, event_id,
+ip_address, status, etc. are stored as attributes with respect to the individual object::
+
 
     In [1]: import doto
-
+    d0
     In [2]: d0 = doto.connect_d0()
 
-    In [3]: df_imgs = d0.get_all_images()
+    In [22]: images = d0.get_all_images()
     >>> Getting /images
 
-    In [5]: df_imgs.tail()
-    Out[5]:
-       distribution       id                                             name  \
-    38       Ubuntu  1608711  Ruby on Rails on Ubuntu 12.10 (Nginx + Unicorn)
-    39       CentOS  1646467                                   CentOS 6.5 x64
-    40       CentOS  1646732                                   CentOS 6.5 x32
-    41       Ubuntu  1687372                          Redmine on Ubuntu 12.04
-    42       Ubuntu  1720819                                  GitLab 6.4.3 CE
+    In [23]: images
+    Out[23]:
+    [Image:490208,
+     Image:568111,
+     Image:633923,
+     Image:714697,
+     Image:1420886,
+     Image:1898676,
+     Image:2003826,...]
 
-       public  slug
-    38   True  None
-    39   True  None
-    40   True  None
-    41   True  None
-    42   True  None
+Additionally, doto support filtering on valid keys::
 
-Pandas Dataframes -- while a bit heavy -- provide a nice interface for searching and sorting over.::
+    In [3]: filters = {'distribution':u'CentOS','name':'x64'}
 
-    In [6]: df_imgs.sort('distribution',inplace=True)
+    In [4]: images = d0.get_all_images(filters=filters)
+    >>> Getting /images
 
-    In [7]: df_imgs.head()
-    Out[7]:
-       distribution      id                    name public  slug
-    20   Arch Linux  361740  Arch Linux 2013.05 x32   True  None
-    19   Arch Linux  350424  Arch Linux 2013.05 x64   True  None
-    5        CentOS    1601          CentOS 5.8 x64   True  None
-    26       CentOS  562354          CentOS 6.4 x64   True  None
-    6        CentOS    1602          CentOS 5.8 x32   True  None
+    In [5]: for img in images:
+        print img.distribution, img.name, img.id
+       ...:
+    CentOS CentOS 5.8 x64 1601
+    CentOS CentOS 6.4 x64 562354
+    CentOS CentOS 6.5 x64 1646467
+
+
+To view information inline, users can provide an optional **Table=True** argument for a well formatted table::
+
+    In [3]: d0.get_all_images(table=True)
+    >>> Getting /images
+    | Ubuntu       | None | True   | 1505699 | Ubuntu 13.10 x64                                |
+    | Ubuntu       | None | True   | 1608711 | Ruby on Rails on Ubuntu 12.10 (Nginx + Unicorn) |
+    | CentOS       | None | True   | 1646467 | CentOS 6.5 x64                                  |
+    | CentOS       | None | True   | 1646732 | CentOS 6.5 x32                                  |
+    | Ubuntu       | None | True   | 1687372 | Redmine on Ubuntu 12.04                         |
+    | Ubuntu       | None | True   | 1860934 | Ghost 0.4.0 on Ubuntu 12.04                     |
+    | Ubuntu       | None | True   | 2105243 | GitLab 6.5.1 CE                                 |
+    | Ubuntu       | None | True   | 2118237 | Dokku-v0.2.1 on Ubuntu 13.04                    |
+    | Ubuntu       | None | True   | 2158507 | Docker 0.8 Ubuntu 13.04 x64                     |
+    ...
 
 
 Currently Supported Services
@@ -102,7 +115,6 @@ Currently Supported Services
 Requirements
 ------------
 
-* python 2.7 and 3.x
 * pandas (>= 0.12)
 * requests (>=2.0.1)
 * pycrypto (>=2.6.1)

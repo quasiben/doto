@@ -160,7 +160,7 @@ class connect_d0(d0mixin):
         return None
 
 
-    def get_all_droplets(self,filters=None, status_check=None, table=False):
+    def get_all_droplets(self,filters=None, status_check=None, table=False, raw_data=False):
         """
         This method returns all active droplets that are currently running in your account.
         All available API information is presented for each droplet.
@@ -177,6 +177,9 @@ class connect_d0(d0mixin):
         data = self._request("/droplets",status_check)
 
         if status_check:
+            return data
+
+        if raw_data:
             return data
 
         if table:
@@ -383,7 +386,7 @@ class connect_d0(d0mixin):
 
         log.info(data)
 
-    def get_all_images(self, filters=None, status_check=False, table=False):
+    def get_all_images(self, filters=None, status_check=False, table=False, raw_data=False):
         """
         Convenience method to get Digital Ocean's list of public images
         and users current private images
@@ -409,6 +412,9 @@ class connect_d0(d0mixin):
 
         data = self._request("/images", status_check)
 
+        if raw_data:
+            return data
+
         if status_check:
             return data
 
@@ -417,6 +423,7 @@ class connect_d0(d0mixin):
             return
 
         images = self._attach_auth(data['images'])
+
 
         if filters:
             images = [Image(**img) for img in images]
