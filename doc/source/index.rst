@@ -117,9 +117,9 @@ Currently Supported Services
 Requirements
 ------------
 
-* pandas (>= 0.12)
 * requests (>=2.0.1)
 * pycrypto (>=2.6.1)
+* six (>=1.3.0)
 
 
 Release Notes
