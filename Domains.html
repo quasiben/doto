@@ -1,0 +1,256 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Domains &mdash; doto 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'./',
+        VERSION:'0.1',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+    <link rel="top" title="doto 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Management" href="Management.html"/>
+        <link rel="prev" title="Images" href="Images.html"/> 
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="icon icon-home"> doto</a>
+        <form class="wy-form" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search docs" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Droplets.html">Droplets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Droplets.html#creating-droplets">Creating Droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Droplets.html#getting-a-specific-droplet">Getting a specific droplet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Droplets.html#getting-all-droplets">Getting all droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Droplets.html#droplet-api">Droplet API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Images.html">Images</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Images.html#creating-snapshots">Creating Snapshots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Images.html#getting-a-specific-image">Getting a specific image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Images.html#getting-all-images">Getting all images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Images.html#image-api">Image API</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Domains</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creating-domains">Creating Domains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-a-specific-domain">Getting a specific domain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-all-droplets">Getting all droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#droplet-api">Droplet API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Management.html">Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Management.html#digitalocean-api">DigitalOcean API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="PublicImages.html">Public Images</a></li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="/">doto</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <ul class="wy-breadcrumbs">
+  <li><a href="index.html">Docs</a> &raquo;</li>
+  <li><a href="">Domains</a></li>
+  
+</ul>
+<hr/>
+
+          
+  <div class="section" id="domains">
+<h1>Domains<a class="headerlink" href="#domains" title="Permalink to this headline">¶</a></h1>
+<p>Droplets are the atomic unit of of compute instances on the Digital Ocean cloud service.  They are available in a
+variety of RAM, HD, CPU configurations.</p>
+<div class="section" id="creating-domains">
+<h2>Creating Domains<a class="headerlink" href="#creating-domains" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><pre>domain = d0.create_domain(name='myurl.com',ip_addr='555.55.5.55')
+
+#or with a droplet
+droplet = d0.create_droplet(..)
+domain = d0.create_domain(name='myurl.com',ip_addr=droplet.ip_address)</pre>
+</div>
+</div>
+<div class="section" id="getting-a-specific-domain">
+<h2>Getting a specific domain<a class="headerlink" href="#getting-a-specific-domain" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">droplet</span> <span class="o">=</span> <span class="n">d0</span><span class="o">.</span><span class="n">get_domain</span><span class="p">(</span><span class="n">domain_id</span><span class="o">=</span><span class="mi">555555</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-all-droplets">
+<h2>Getting all droplets<a class="headerlink" href="#getting-all-droplets" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">domains</span> <span class="o">=</span> <span class="n">d0</span><span class="o">.</span><span class="n">get_all_domains</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="droplet-api">
+<h2>Droplet API<a class="headerlink" href="#droplet-api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="doto.Domain">
+<em class="property">class </em><tt class="descclassname">doto.</tt><tt class="descname">Domain</tt><big>(</big><em>**kwds</em><big>)</big><a class="headerlink" href="#doto.Domain" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="doto.Domain.destroy">
+<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#doto.Domain.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method allows you to destroy a domain.</p>
+<p><a class="reference external" href="https://api.digitalocean.com/domains/[domain_id]/destroy/">https://api.digitalocean.com/domains/[domain_id]/destroy/</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Domain.edit_record">
+<tt class="descname">edit_record</tt><big>(</big><em>record_id=None</em>, <em>record_type=None</em>, <em>data=None</em>, <em>name=None</em>, <em>priority=None</em>, <em>port=None</em>, <em>weight=None</em><big>)</big><a class="headerlink" href="#doto.Domain.edit_record" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method edits an existing domain record.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>record_id</strong> (<em>int</em>) &#8211; ID of record you are trying to retrieve.</li>
+<li><strong>record_type</strong> (<em>String</em>) &#8211; the type of record you would like to create. &#8216;A&#8217;, &#8216;CNAME&#8217;, &#8216;NS&#8217;, &#8216;TXT&#8217;, &#8216;MX&#8217; or &#8216;SRV&#8217;.</li>
+<li><strong>data</strong> (<em>String</em>) &#8211; This is the value of the record.</li>
+<li><strong>name</strong> (<em>String</em>) &#8211; Required for &#8216;A&#8217;, &#8216;CNAME&#8217;, &#8216;TXT&#8217; and &#8216;SRV&#8217; records otherwise optional</li>
+<li><strong>priority</strong> (<em>int</em>) &#8211; required for &#8216;SRV&#8217; and &#8216;MX&#8217; records otherwise optional</li>
+<li><strong>port</strong> (<em>int</em>) &#8211; required for &#8216;SRV&#8217; records otherwise optional</li>
+<li><strong>weight</strong> (<em>int</em>) &#8211; required for &#8216;SRV&#8217; records. otherwise optional</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="https://api.digitalocean.com/domains/[domain_id]/records/[record_id]/edit">https://api.digitalocean.com/domains/[domain_id]/records/[record_id]/edit</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Domain.get_all_records">
+<tt class="descname">get_all_records</tt><big>(</big><em>table=False</em><big>)</big><a class="headerlink" href="#doto.Domain.get_all_records" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns all of your current domain records.</p>
+<p><a class="reference external" href="https://api.digitalocean.com/domains/[domain_id]/records">https://api.digitalocean.com/domains/[domain_id]/records</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Domain.get_record">
+<tt class="descname">get_record</tt><big>(</big><em>record_id=None</em><big>)</big><a class="headerlink" href="#doto.Domain.get_record" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the specified domain record.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>record_id</strong> (<em>int</em>) &#8211; ID of record you are trying to retrieve.</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="https://api.digitalocean.com/domains/[domain_id]/records/[record_id">https://api.digitalocean.com/domains/[domain_id]/records/[record_id</a>]?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.Domain.record_destroy">
+<tt class="descname">record_destroy</tt><big>(</big><em>record_id=None</em><big>)</big><a class="headerlink" href="#doto.Domain.record_destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method deletes the specified domain record.</p>
+<p><a class="reference external" href="https://api.digitalocean.com/domains/[domain_id]/records/[record_id]/destroy">https://api.digitalocean.com/domains/[domain_id]/records/[record_id]/destroy</a>?
+client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          <footer>
+  
+    <div class="rst-footer-buttons">
+      
+        <a href="Management.html" class="btn btn-neutral float-right" title="Management"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="Images.html" class="btn btn-neutral" title="Images"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <p>
+      &copy; Copyright 2014, Benjamin Zaitlen.
+  </p>
+
+  <a href="https://www.github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="http://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+</body>
+</html>
