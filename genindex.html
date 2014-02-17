@@ -83,10 +83,18 @@
 <li class="toctree-l2"><a class="reference internal" href="Images.html#image-api">Image API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="Domains.html">Domains</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Domains.html#creating-domains">Creating Domains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Domains.html#getting-a-specific-domain">Getting a specific domain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Domains.html#getting-all-droplets">Getting all droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Domains.html#droplet-api">Droplet API</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Management.html">Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Management.html#digitalocean-api">DigitalOcean API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PublicImages.html">Public Images</a></li>
 </ul>
 
@@ -139,6 +147,10 @@
   </dt>
 
       
+  <dt><a href="Management.html#doto.connect_d0.create_domain">create_domain() (doto.connect_d0 method)</a>
+  </dt>
+
+      
   <dt><a href="Management.html#doto.connect_d0.create_droplet">create_droplet() (doto.connect_d0 method)</a>
   </dt>
 
@@ -163,10 +175,14 @@
   </dt>
 
       
-  <dt><a href="Droplets.html#doto.Droplet.destroy">destroy() (doto.Droplet method)</a>
+  <dt><a href="Domains.html#doto.Domain.destroy">destroy() (doto.Domain method)</a>
   </dt>
 
       <dd><dl>
+        
+  <dt><a href="Droplets.html#doto.Droplet.destroy">(doto.Droplet method)</a>
+  </dt>
+
         
   <dt><a href="Images.html#doto.Image.destroy">(doto.Image method)</a>
   </dt>
@@ -174,6 +190,10 @@
       </dl></dd>
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Domains.html#doto.Domain">Domain (class in doto)</a>
+  </dt>
+
       
   <dt><a href="Droplets.html#doto.Droplet">Droplet (class in doto)</a>
   </dt>
@@ -183,6 +203,12 @@
 
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Domains.html#doto.Domain.edit_record">edit_record() (doto.Domain method)</a>
+  </dt>
+
+  </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="Droplets.html#doto.Droplet.event_update">event_update() (doto.Droplet method)</a>
@@ -201,11 +227,19 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
+  <dt><a href="Management.html#doto.connect_d0.get_all_domains">get_all_domains() (doto.connect_d0 method)</a>
+  </dt>
+
+      
   <dt><a href="Management.html#doto.connect_d0.get_all_droplets">get_all_droplets() (doto.connect_d0 method)</a>
   </dt>
 
       
   <dt><a href="Management.html#doto.connect_d0.get_all_images">get_all_images() (doto.connect_d0 method)</a>
+  </dt>
+
+      
+  <dt><a href="Domains.html#doto.Domain.get_all_records">get_all_records() (doto.Domain method)</a>
   </dt>
 
       
@@ -217,11 +251,15 @@
   </dt>
 
       
-  <dt><a href="Management.html#doto.connect_d0.get_domains">get_domains() (doto.connect_d0 method)</a>
+  <dt><a href="Management.html#doto.connect_d0.get_domain">get_domain() (doto.connect_d0 method)</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Management.html#doto.connect_d0.get_domains">get_domains() (doto.connect_d0 method)</a>
+  </dt>
+
       
   <dt><a href="Management.html#doto.connect_d0.get_droplet">get_droplet() (doto.connect_d0 method)</a>
   </dt>
@@ -232,6 +270,10 @@
 
       
   <dt><a href="Management.html#doto.connect_d0.get_image">get_image() (doto.connect_d0 method)</a>
+  </dt>
+
+      
+  <dt><a href="Domains.html#doto.Domain.get_record">get_record() (doto.Domain method)</a>
   </dt>
 
       
@@ -301,11 +343,15 @@
   </dt>
 
       
-  <dt><a href="Droplets.html#doto.Droplet.rename">rename() (doto.Droplet method)</a>
+  <dt><a href="Domains.html#doto.Domain.record_destroy">record_destroy() (doto.Domain method)</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Droplets.html#doto.Droplet.rename">rename() (doto.Droplet method)</a>
+  </dt>
+
       
   <dt><a href="Droplets.html#doto.Droplet.resize">resize() (doto.Droplet method)</a>
   </dt>

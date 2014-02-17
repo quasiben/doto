@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; doto 0.1 documentation</title>
+  <title>Configuration &mdash; doto 0.1 documentation</title>
   
 
   
@@ -43,7 +43,9 @@
   
 
   
-    <link rel="top" title="doto 0.1 documentation" href="index.html"/> 
+    <link rel="top" title="doto 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Public Images" href="PublicImages.html"/>
+        <link rel="prev" title="Management" href="Management.html"/> 
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
@@ -67,7 +69,7 @@
       <div class="wy-menu wy-menu-vertical" data-spy="affix">
         
         
-            <ul>
+            <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Droplets.html">Droplets</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Droplets.html#creating-droplets">Creating Droplets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Droplets.html#getting-a-specific-droplet">Getting a specific droplet</a></li>
@@ -82,10 +84,18 @@
 <li class="toctree-l2"><a class="reference internal" href="Images.html#image-api">Image API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="Domains.html">Domains</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Domains.html#creating-domains">Creating Domains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Domains.html#getting-a-specific-domain">Getting a specific domain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Domains.html#getting-all-droplets">Getting all droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Domains.html#droplet-api">Droplet API</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Management.html">Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Management.html#digitalocean-api">DigitalOcean API</a></li>
 </ul>
 </li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PublicImages.html">Public Images</a></li>
 </ul>
 
@@ -108,21 +118,33 @@
         <div class="rst-content">
           <ul class="wy-breadcrumbs">
   <li><a href="index.html">Docs</a> &raquo;</li>
-  <li><a href="">&lt;no title&gt;</a></li>
+  <li><a href="">Configuration</a></li>
   
 </ul>
 <hr/>
 
           
-  <p>An example <tt class="docutils literal"><span class="pre">~/.doto/.dotorc</span></tt> file should look like:</p>
+  <div class="section" id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+<p>An example <tt class="docutils literal"><span class="pre">~/.doto/.dotorc</span></tt> file should look like:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">Credentials</span><span class="p">]</span>
 <span class="n">client_id</span> <span class="o">=</span> <span class="n">XXXXXXXXXXXXX</span>
 <span class="n">api_key</span> <span class="o">=</span> <span class="mi">99999999999999999999999</span>
 </pre></div>
 </div>
+</div>
 
 
           <footer>
+  
+    <div class="rst-footer-buttons">
+      
+        <a href="PublicImages.html" class="btn btn-neutral float-right" title="Public Images"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="Management.html" class="btn btn-neutral" title="Management"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
