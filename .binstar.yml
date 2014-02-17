@@ -5,8 +5,8 @@ platform:
   - linux-64
 
 engine:
-   - python=2 six requests pycrypto
-   - python=3 six requests pycrypto
+   - python=2
+   - python=3
 
 before_script:
   - python -V
