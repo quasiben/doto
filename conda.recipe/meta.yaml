@@ -10,8 +10,8 @@ requirements:
   run:
     - python
     - requests
-    - pandas
     - pycrypto
+    - six 
 
 test:
   # Python imports

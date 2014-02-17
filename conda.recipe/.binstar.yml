@@ -1,0 +1,18 @@
+
+package: doto
+
+platform:
+  - linux-64
+
+engine:
+   - python=2 six requests pycrypto
+   - python=3 six requests pycrypto
+
+before_script:
+  - python -V
+  - conda install -q six requests pycrypto
+
+script:
+  - python setup.py install
+  - python -c 'import doto';
+
