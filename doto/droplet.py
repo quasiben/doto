@@ -86,8 +86,6 @@ class Droplet(d0mixin):
         This method allows you to reinstall a droplet with a default image.
         This is useful if you want to start again but retain the same IP address for your droplet.
 
-
-
         :type image_id: int
         :param image_id: ID of the image you would like to use to rebuild your droplet with
 

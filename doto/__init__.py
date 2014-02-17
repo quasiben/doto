@@ -5,6 +5,7 @@ from doto.logger import log
 from doto.config import Config
 from doto.droplet import Droplet
 from doto.image import Image
+from doto.domain import Domain
 from doto.d0_mixin import d0mixin
 from Crypto.PublicKey import RSA
 import os
@@ -31,9 +32,9 @@ class connect_d0(d0mixin):
         if not debug:
             log.disabled = True
 
-        config = Config(path)
-        self._client_id = config.get('Credentials','client_id')
-        self._api_key = config.get('Credentials','api_key')
+        self.config = Config(path)
+        self._client_id = self.config.get('Credentials','client_id')
+        self._api_key = self.config.get('Credentials','api_key')
 
     def __str__(self):
         return "DigitialOcean Connection Object"
@@ -463,3 +464,99 @@ class connect_d0(d0mixin):
 
 
         return Image(**data['image'])
+
+    def get_all_domains(self,filters=None, status_check=None, table=False, raw_data=False):
+        """
+        This method returns all active droplets that are currently running in your account.
+        All available API information is presented for each droplet.
+
+        https://api.digitalocean.com/droplets/?
+        client_id=[your_client_id]&api_key=[your_api_key]
+
+        :rtype: list
+        :return: A list of :class:`doto.Droplet`
+        """
+
+        data = self._request("/domains",status_check)
+
+        if status_check:
+            return data
+
+        if raw_data:
+            return data
+
+        if table:
+            self._pprint_table(data['domains'])
+            return
+
+        domains = self._attach_auth(data['domains'])
+
+        if filters:
+            droplets = [Droplet(**drop) for drop in domains]
+            for k,v in filters.iteritems():
+                droplets = filter(lambda x: v in getattr(x,k), droplets)
+
+            return droplets
+
+
+        #convert dictionary to droplet objects
+        return [Domain(**dom) for dom in domains]
+
+    def create_domain(self,name=None,ip_addr=None):
+        """
+        This method creates a new domain name with an A record for the specified [ip_address].
+
+        :type name: string
+        :param size: The NAME of the domain
+
+
+        :type ip_address: string
+        :param size: ip address for the domain's initial a record.
+
+        https://api.digitalocean.com/domains/new?
+        client_id=[your_client_id]&api_key=[your_api_key]&name=[domain]&ip_address=[ip_address]
+        """
+
+
+        log.info("Creating new domain")
+
+        data = self._request("/domains/new",name=name,
+                          ip_address=ip_addr)
+
+        log.debug(data)
+
+        #don't like this but will do for now
+        data['domain']['_client_id'] = self._client_id
+        data['domain']['_api_key'] = self._api_key
+        domain = Domain(**data['domain'])
+
+        return domain
+
+    def get_domain(self, domain_id=None):
+        """
+        This method displays the attributes of an image.
+
+        :type image_id: int
+        :param image_id: The ID of the image
+
+        :rtype: :class:`doto.Image`
+        :return: The newly created :class:`doto.Image`.
+
+        https://api.digitalocean.com/domains/[domain_id]?
+        client_id=[your_client_id]&api_key=[your_api_key]
+        """
+
+        url = "/domains/%d" % (domain_id)
+
+        data = self._request(url)
+
+
+        log.debug(data)
+
+        #don't like this but will do for now
+        data['domain']['_client_id'] = self._client_id
+        data['domain']['_api_key'] = self._api_key
+
+
+        return Domain(**data['domain'])
+

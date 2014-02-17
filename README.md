@@ -30,8 +30,10 @@ doto supports the following features:
  - Create and Upload
  - Delete
 
-- Domain:
- - Coming Soon
+- Domains/Records:
+ - create
+ - destory
+ - edit
 
 To get started with doto create a **.dotorc** file in a directory named, **~/.doto**, with your **api_key**
 and **client_id** listed:

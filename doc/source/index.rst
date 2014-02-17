@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 doto: A Python interface to Digital Ocean
-========================================
+=========================================
 
 DOTO is an open-source Python 2/3 interface to `Digital Ocean's API <http://developers.digitalocean.com/>`_.
 
@@ -109,7 +109,9 @@ Currently Supported Services
 
     Droplets
     Images
+    Domains
     Management
+    config
     PublicImages
 
 Requirements

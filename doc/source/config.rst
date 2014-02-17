@@ -1,3 +1,8 @@
+-------------
+Configuration
+-------------
+
+
 An example ``~/.doto/.dotorc`` file should look like::
 
     [Credentials]
