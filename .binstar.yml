@@ -10,10 +10,16 @@ engine:
 
 before_script:
   - python -V
-  - conda install -q six requests pycrypto
+  - conda install -q six requests pycrypto jinja2
 
 script:
   - python setup.py install
   - python -c 'import doto';
   - conda build conda.recipe
+  - mkdir dist
+  - cp `conda build conda.recipe --output` dist/
 
+
+## Build Targets: Upload these files to your binstar package
+build_targets:
+  - dist/*

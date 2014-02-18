@@ -4,36 +4,9 @@ doto
 ====
 
 Doto is a Python interface to Digital Ocean with an emphasis on production usage.
-doto supports the following features:
+doto supports the full Digital Ocean API:
 
-- Droplet:
- - Create
- - Destroy
- - Transfer
- - Create Snapshot
- - Resize
- - Restore
- - Rename
- - Reboot
- - Shutdown
- - Power Cycle
- - Power Off
- - Power On
- - Password Reset
-
-- Image/Snapshot:
- - Create Snapotshot
- - Destroy
- - Transfer
-
-- SSH Key:
- - Create and Upload
- - Delete
-
-- Domains/Records:
- - create
- - destory
- - edit
+**Full Documentation at: http://quasiben.github.io/doto/**
 
 To get started with doto create a **.dotorc** file in a directory named, **~/.doto**, with your **api_key**
 and **client_id** listed:
