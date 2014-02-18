@@ -16,13 +16,13 @@ import sys
 import os
 import os
 
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-
-if on_rtd:
-    html_theme = 'default'
-else:
+try:
     import sphinx_rtd_theme
-
+    html_theme = "sphinx_rtd_theme"
+    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+except ImportError:
+    sphinx_rtd_theme = None
+    html_theme = "default"
 
 # import juliadoc
 
@@ -116,11 +116,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-if sphinx_rtd_theme:
-    html_theme = "sphinx_rtd_theme"
-    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
-else:
-    html_theme = "default"
+
 
 
 # html_theme = 'julia'
