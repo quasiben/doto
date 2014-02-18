@@ -14,7 +14,15 @@
 
 import sys
 import os
-import sphinx_rtd_theme
+import os
+
+on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+
+if on_rtd:
+    html_theme = 'default'
+else:
+    import sphinx_rtd_theme
+
 
 # import juliadoc
 
@@ -263,7 +271,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'doto', u'doto Documentation',
-   u'Benjamin Zaitlen', 'doto', 'One line description of project.',
+   u'Benjamin Zaitlen', 'doto', 'Python API for DigitalOcean',
    'Miscellaneous'),
 ]
 
