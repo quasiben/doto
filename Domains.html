@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Domains &mdash; doto 0.1 documentation</title>
+  <title>Domains &mdash; doto 0.2 documentation</title>
   
 
   
@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:'./',
-        VERSION:'0.1',
+        VERSION:'0.2',
         COLLAPSE_INDEX:false,
         FILE_SUFFIX:'.html',
         HAS_SOURCE:  true
@@ -43,7 +43,7 @@
   
 
   
-    <link rel="top" title="doto 0.1 documentation" href="index.html"/>
+    <link rel="top" title="doto 0.2 documentation" href="index.html"/>
         <link rel="next" title="Management" href="Management.html"/>
         <link rel="prev" title="Images" href="Images.html"/> 
 
@@ -126,8 +126,15 @@
           
   <div class="section" id="domains">
 <h1>Domains<a class="headerlink" href="#domains" title="Permalink to this headline">¶</a></h1>
-<p>Droplets are the atomic unit of of compute instances on the Digital Ocean cloud service.  They are available in a
-variety of RAM, HD, CPU configurations.</p>
+<p>Digital Ocean allows users to easily setup and control hostnames and subdomains for existing droplets.
+Simply point the DNS of your host provider to:</p>
+<ul class="simple">
+<li>ns1.digitalocean.com</li>
+<li>ns2.digitalocean.com</li>
+<li>ns3.digitalocean.com</li>
+</ul>
+<p>For full documentation on setup please read:
+<a class="reference external" href="https://www.digitalocean.com/community/articles/how-to-set-up-a-host-name-with-digitalocean">How To Set Up a Host Name with DigitalOcean</a>.</p>
 <div class="section" id="creating-domains">
 <h2>Creating Domains<a class="headerlink" href="#creating-domains" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python"><pre>domain = d0.create_domain(name='myurl.com',ip_addr='555.55.5.55')
