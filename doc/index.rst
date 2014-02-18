@@ -8,6 +8,8 @@ doto: A Python interface to Digital Ocean
 
 DOTO is an open-source Python 2/3 interface to `Digital Ocean's API <http://developers.digitalocean.com/>`_.
 
+Source code located on Github_.
+
 Installing
 ----------
 
@@ -17,6 +19,15 @@ You can install ``doto`` with ``conda`` or ``pip``:
 
     $ pip install doto
     $ conda install doto
+
+or install `from source <https://github.com/quasiben/doto/>`_
+
+
+.. code-block:: console
+
+    $ git clone https://github.com/quasiben/doto.git
+    $ cd doto
+    $ python setup.py install
 
 
 Why yet another Python library for Digital Ocean?
@@ -136,4 +147,5 @@ Indices and tables
 
 
 .. _API: http://developers.digitalocean.com/
+.. _Github: https://github.com/quasiben/doto/
 

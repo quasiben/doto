@@ -2,8 +2,16 @@
 Domains
 -------
 
-Droplets are the atomic unit of of compute instances on the Digital Ocean cloud service.  They are available in a
-variety of RAM, HD, CPU configurations.
+Digital Ocean allows users to easily setup and control hostnames and subdomains for existing droplets.
+Simply point the DNS of your host provider to:
+
+- ns1.digitalocean.com
+- ns2.digitalocean.com
+- ns3.digitalocean.com
+
+For full documentation on setup please read:
+`How To Set Up a Host Name with DigitalOcean <https://www.digitalocean.com/community/articles/how-to-set-up-a-host-name-with-digitalocean>`_.
+
 
 .. THIS IS A COMMENT automethod:: doto.connect_d0.create_droplet
 
