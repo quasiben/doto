@@ -15,6 +15,7 @@ before_script:
 script:
   - python setup.py install
   - python -c 'import doto';
+  - python tests/test_gets.py
   - conda build conda.recipe
   - mkdir dist
   - cp `conda build conda.recipe --output` dist/
