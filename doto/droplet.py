@@ -1,12 +1,11 @@
 from __future__ import print_function, division, absolute_import
 
 from doto.logger import log
-from doto.d0_mixin import d0mixin
 
 import requests
 
 
-class Droplet(d0mixin):
+class Droplet(object):
 
     def __str__(self):
         return ("Droplet:%s") % (self.id)
@@ -14,7 +13,8 @@ class Droplet(d0mixin):
     def __repr__(self):
         return ("Droplet:%s") % (self.id)
 
-    def __init__(self, **kwds):
+    def __init__(self, conn=None, **kwds):
+        self._conn = conn
         self.__dict__.update(kwds)
 
     def update(self):
@@ -25,7 +25,7 @@ class Droplet(d0mixin):
         client_id=[your_client_id]&api_key=[your_api_key]
         """
 
-        data = self._request("/droplets/"+str(self.id))
+        data = self._conn.request("/droplets/"+str(self.id))
 
         self.__dict__.update(**data['droplet'])
 
@@ -38,7 +38,7 @@ class Droplet(d0mixin):
         """
 
         url = "/events/%s" % (str(self.event_id))
-        data = self._request(url)
+        data = self._conn.request(url)
         log.debug("Updating Event")
         log.debug(data)
 
@@ -73,7 +73,7 @@ class Droplet(d0mixin):
 
         url = "/droplets/%s/rename" % (str(self.id))
 
-        data = self._request(url,name=name)
+        data = self._conn.request(url,name=name)
 
         self.event_id = data['event_id']
 
@@ -101,7 +101,7 @@ class Droplet(d0mixin):
 
         url = "/droplets/%s/rebuild" % (str(self.id))
 
-        data = self._request(url,image_id=image_id)
+        data = self._conn.request(url,image_id=image_id)
 
         self.event_id = data['event_id']
 
@@ -127,7 +127,7 @@ class Droplet(d0mixin):
 
         url = "/droplets/%s/restore" % (str(self.id))
 
-        data = self._request(url,image_id=image_id)
+        data = self._conn.request(url,image_id=image_id)
 
         self.event_id = data['event_id']
 
@@ -153,7 +153,7 @@ class Droplet(d0mixin):
 
         url = "/droplets/%s/%s" % (str(self.id), backup_setting)
 
-        data = self._request(url)
+        data = self._conn.request(url)
 
         self.event_id = data['event_id']
 
@@ -174,7 +174,7 @@ class Droplet(d0mixin):
 
         url = "/droplets/%s/destroy" % (str(self.id))
 
-        data = self._request(url,scrub_data=scrub_data)
+        data = self._conn.request(url,scrub_data=scrub_data)
 
         self.event_id = data['event_id']
 
@@ -191,7 +191,7 @@ class Droplet(d0mixin):
 
         url = "/droplets/%s/reboot" % (str(self.id))
 
-        data = self._request(url)
+        data = self._conn.request(url)
 
         self.event_id = data['event_id']
 
@@ -208,7 +208,7 @@ class Droplet(d0mixin):
 
         url = "/droplets/%s/shutdown" % (str(self.id))
 
-        data = self._request(url)
+        data = self._conn.request(url)
 
         self.event_id = data['event_id']
 
@@ -228,7 +228,7 @@ class Droplet(d0mixin):
 
         url = "/droplets/%s/power_cycle" % (str(self.id))
 
-        data = self._request(url)
+        data = self._conn.request(url)
 
         self.event_id = data['event_id']
 
@@ -245,7 +245,7 @@ class Droplet(d0mixin):
 
         url = "/droplets/%s/power_off" % (str(self.id))
 
-        data = self._request(url)
+        data = self._conn.request(url)
 
         self.event_id = data['event_id']
 
@@ -263,7 +263,7 @@ class Droplet(d0mixin):
 
         url = "/droplets/%s/power_on" % (str(self.id))
 
-        data = self._request(url)
+        data = self._conn.request(url)
 
         self.event_id = data['event_id']
 
@@ -281,7 +281,7 @@ class Droplet(d0mixin):
 
         url = "/droplets/%s/password_reset" % (str(self.id))
 
-        data = self._request(url)
+        data = self._conn.request(url)
 
         self.event_id = data['event_id']
 
@@ -307,7 +307,7 @@ class Droplet(d0mixin):
 
         url = "/droplets/%s/resize" % (str(self.id))
 
-        data = self._request(url,size=size)
+        data = self._conn.request(url,size=size)
 
         self.event_id = data['event_id']
 
@@ -336,7 +336,7 @@ class Droplet(d0mixin):
 
         url = "/droplets/%s/snapshot" % (str(self.id))
 
-        data = self._request(url,name=name)
+        data = self._conn.request(url,name=name)
 
         self.event_id = data['event_id']
 

@@ -1,12 +1,11 @@
 from __future__ import print_function, division, absolute_import
 
 from doto.logger import log
-from doto.d0_mixin import d0mixin
 
 import requests
 
 
-class Image(d0mixin, object):
+class Image(object):
 
     def __str__(self):
         return ("Image:%s") % (self.id)
@@ -14,7 +13,8 @@ class Image(d0mixin, object):
     def __repr__(self):
         return ("Image:%s") % (self.id)
 
-    def __init__(self, **kwds):
+    def __init__(self, conn=None, **kwds):
+        self._conn = conn
         self.__dict__.update(kwds)
 
     def event_update(self):
@@ -26,7 +26,7 @@ class Image(d0mixin, object):
         """
 
         url = "/events/%s" % (str(self.event_id))
-        data = self._request(url)
+        data = self._conn.request(url)
 
         log.debug("Updating Event")
         log.debug(data)
@@ -61,7 +61,7 @@ class Image(d0mixin, object):
 
         url = "/images/%s/destroy" % (str(self.id))
 
-        data = self._request(url)
+        data = self._conn.request(url)
 
         log.info(data)
 
@@ -81,7 +81,7 @@ class Image(d0mixin, object):
 
         url = "/images/%s/transfer" % (str(self.id))
 
-        data = self._request(url,region_id=region_id)
+        data = self._conn.request(url,region_id=region_id)
 
         self.event_id = data['event_id']
 

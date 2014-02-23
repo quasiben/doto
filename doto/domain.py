@@ -1,12 +1,12 @@
 from __future__ import print_function, division, absolute_import
 
 from doto.logger import log
-from doto.d0_mixin import d0mixin
+from doto.connection import connection
 
 import requests
 
 
-class Domain(d0mixin, object):
+class Domain(object):
 
     def __str__(self):
         return ("Domain:%s") % (self.id)
@@ -14,7 +14,8 @@ class Domain(d0mixin, object):
     def __repr__(self):
         return ("Domain:%s") % (self.id)
 
-    def __init__(self, **kwds):
+    def __init__(self,conn=None, **kwds):
+        self._conn = conn
         self.__dict__.update(kwds)
 
     def _pprint_table(self, data):
@@ -46,7 +47,7 @@ class Domain(d0mixin, object):
 
         url = "/domains/%s/destroy" % (str(self.id))
 
-        data = self._request(url)
+        data = self._conn.request(url)
 
         log.info(data)
 
@@ -62,7 +63,7 @@ class Domain(d0mixin, object):
         log.info("Getting Records")
         url = "/domains/%s/records" % (str(self.id))
 
-        data = self._request(url)
+        data = self._conn.request(url)
 
         log.debug(data)
 
@@ -85,7 +86,7 @@ class Domain(d0mixin, object):
         log.info("Getting Record: %d" (record_id))
         url = "/domains/%s/records/%d" % (str(self.id), record_id)
 
-        data = self._request(url)
+        data = self._conn.request(url)
 
         log.debug(data)
 
@@ -125,7 +126,7 @@ class Domain(d0mixin, object):
         log.info("Editing Record: %d" (record_id))
         url = "/domains/%s/records/%d/edit" % (str(self.id), record_id)
 
-        data = self._request(url,record_type=record_type,
+        data = self._conn.request(url,record_type=record_type,
                              data=data,name=name,priority=priority,
                              port=port,weight=weight)
 
@@ -143,7 +144,7 @@ class Domain(d0mixin, object):
 
         url = "domains/%s/records/%d/destroy" % (str(self.id),record_id)
 
-        data = self._request(url)
+        data = self._conn.request(url)
 
         log.info(data)
 

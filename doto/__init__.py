@@ -6,7 +6,7 @@ from doto.config import Config
 from doto.droplet import Droplet
 from doto.image import Image
 from doto.domain import Domain
-from doto.d0_mixin import d0mixin
+from doto.connection import connection
 from Crypto.PublicKey import RSA
 import os
 from os.path import join as pjoin
@@ -24,17 +24,33 @@ del get_versions
 
 BASEURL = "https://api.digitalocean.com"
 
-class connect_d0(d0mixin):
+class connect_d0(object):
 
-    def __init__(self, path=None,debug=True):
+    def __init__(self, path=None,log_flag=True, client_id=None,api_key=None ):
+        '''
+
+        :type path: string
+        :param path: path to valid doto credentials
+
+        :type log_flag: bool
+        :param log_flag: set logging on or off.  Logging is on by default
+
+        :type client_id: string
+        :param client_id: client id credential
+
+        :type api_key: string
+        :param api_key: api key credential
+
+        '''
 
         #logging is off when log.disabled is set to True
-        if not debug:
+        if not log_flag:
             log.disabled = True
 
         self.config = Config(path)
-        self._client_id = self.config.get('Credentials','client_id')
-        self._api_key = self.config.get('Credentials','api_key')
+        self._client_id = client_id or self.config.get('Credentials','client_id')
+        self._api_key = api_key or self.config.get('Credentials','api_key')
+        self._conn = connection(self._client_id, self._api_key)
 
     def __str__(self):
         return "DigitialOcean Connection Object"
@@ -131,7 +147,7 @@ class connect_d0(d0mixin):
         if isinstance(ssh_key_ids,(tuple,list)):
             ssh_key_ids = ', '.join(str(key) for key in ssh_key_ids)
 
-        data = self._request("/droplets/new",name=name,
+        data = self._conn.request("/droplets/new",name=name,
                           size_id=size_id,image_id=image_id,
                           region_id=region_id,ssh_key_ids=ssh_key_ids,
                           private_networking=private_networking)
@@ -175,7 +191,7 @@ class connect_d0(d0mixin):
 
 
         log.info("Get All Droplets")
-        data = self._request("/droplets",status_check)
+        data = self._conn.request("/droplets",status_check)
 
         if status_check:
             return data
@@ -212,7 +228,7 @@ class connect_d0(d0mixin):
 
         """
 
-        data = self._request("/droplets/"+str(id))
+        data = self._conn.request("/droplets/"+str(id))
 
         #don't like this but will do for now
         data['droplet']['_client_id'] = self._client_id
@@ -231,7 +247,7 @@ class connect_d0(d0mixin):
         client_id=[your_client_id]&api_key=[your_api_key]
         """
 
-        data = self._request("/sizes", status_check)
+        data = self._conn.request("/sizes", status_check)
 
         if status_check:
             return data
@@ -251,7 +267,7 @@ class connect_d0(d0mixin):
         client_id=[your_client_id]&api_key=[your_api_key]
         """
 
-        data = self._request("/regions", status_check)
+        data = self._conn.request("/regions", status_check)
 
         if status_check:
             return data
@@ -273,7 +289,7 @@ class connect_d0(d0mixin):
         """
 
 
-        data = self._request("/domains", status_check)
+        data = self._conn.request("/domains", status_check)
         if status_check:
             return data
 
@@ -294,7 +310,7 @@ class connect_d0(d0mixin):
         """
 
 
-        data = self._request("/ssh_keys", status_check)
+        data = self._conn.request("/ssh_keys", status_check)
 
         if status_check:
             return data
@@ -344,7 +360,7 @@ class connect_d0(d0mixin):
 
         os.chmod(keyfile+'_rsa', 0o0600)
 
-        data = self._request("/ssh_keys/new/", name=ssh_key_name,
+        data = self._conn.request("/ssh_keys/new/", name=ssh_key_name,
                              ssh_pub_key=public_key)
 
         #include path to newly created file
@@ -366,7 +382,7 @@ class connect_d0(d0mixin):
 
         url = "/ssh_keys/%d/destroy" % (ssh_key_id)
 
-        data = self._request(url)
+        data = self._conn.request(url)
 
         log.info(data)
 
@@ -383,7 +399,7 @@ class connect_d0(d0mixin):
 
         url = "/ssh_keys/%d" % (ssh_key_id)
 
-        data = self._request(url)
+        data = self._conn.request(url)
 
         log.info(data)
 
@@ -411,7 +427,7 @@ class connect_d0(d0mixin):
         client_id=[your_client_id]&api_key=[your_api_key]
         """
 
-        data = self._request("/images", status_check)
+        data = self._conn.request("/images", status_check)
 
         if raw_data:
             return data
@@ -453,7 +469,7 @@ class connect_d0(d0mixin):
 
         url = "/images/%d" % (image_id)
 
-        data = self._request(url)
+        data = self._conn.request(url)
 
 
         log.info(data)
@@ -477,7 +493,7 @@ class connect_d0(d0mixin):
         :return: A list of :class:`doto.Droplet`
         """
 
-        data = self._request("/domains",status_check)
+        data = self._conn.request("/domains",status_check)
 
         if status_check:
             return data
@@ -520,7 +536,7 @@ class connect_d0(d0mixin):
 
         log.info("Creating new domain")
 
-        data = self._request("/domains/new",name=name,
+        data = self._conn.request("/domains/new",name=name,
                           ip_address=ip_addr)
 
         log.debug(data)
@@ -548,7 +564,7 @@ class connect_d0(d0mixin):
 
         url = "/domains/%d" % (domain_id)
 
-        data = self._request(url)
+        data = self._conn.request(url)
 
 
         log.debug(data)
