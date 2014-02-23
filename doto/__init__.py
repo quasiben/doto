@@ -70,20 +70,6 @@ class connect_d0(object):
         else:
             log.disabled = False
 
-
-    def _attach_auth(self,items):
-        """
-        convenience method to attach client_id and api_key to
-        Image or Droplet object
-        """
-
-        for d in items:
-            #convert dictionary to droplet objects
-            d['_client_id'] = self._client_id
-            d['_api_key'] = self._api_key
-
-        return items
-
     def _pprint_table(self, data):
         """
         pprint table: from stackoverflow:
@@ -152,10 +138,7 @@ class connect_d0(object):
                           region_id=region_id,ssh_key_ids=ssh_key_ids,
                           private_networking=private_networking)
 
-        #don't like this but will do for now
-        data['droplet']['_client_id'] = self._client_id
-        data['droplet']['_api_key'] = self._api_key
-        droplet = Droplet(**data['droplet'])
+        droplet = Droplet(conn=_conn, **data['droplet'])
 
         droplet.update()
         droplet.event_update()
@@ -203,10 +186,10 @@ class connect_d0(object):
             self._pprint_table(data['droplets'])
             return
 
-        droplets = self._attach_auth(data['droplets'])
+        droplets = data['droplets']
 
         if filters:
-            droplets = [Droplet(**drop) for drop in droplets]
+            droplets = [Droplet(conn=self._conn, **drop) for drop in droplets]
             for k,v in filters.iteritems():
                 droplets = filter(lambda x: v in getattr(x,k), droplets)
 
@@ -214,7 +197,7 @@ class connect_d0(object):
 
 
         #convert dictionary to droplet objects
-        return [Droplet(**drop) for drop in droplets]
+        return [Droplet(conn=self._conn, **drop) for drop in droplets]
 
     def get_droplet(self, id=None):
         """
@@ -230,12 +213,8 @@ class connect_d0(object):
 
         data = self._conn.request("/droplets/"+str(id))
 
-        #don't like this but will do for now
-        data['droplet']['_client_id'] = self._client_id
-        data['droplet']['_api_key'] = self._api_key
-
         #convert dictionary to droplet objects
-        return Droplet(**data['droplet'])
+        return Droplet(conn=self._conn, **data['droplet'])
 
 
     def get_sizes(self,status_check=None, table=False):
@@ -439,18 +418,17 @@ class connect_d0(object):
             self._pprint_table(data['images'])
             return
 
-        images = self._attach_auth(data['images'])
-
+        images = data['images']
 
         if filters:
-            images = [Image(**img) for img in images]
+            images = [Image(conn=self._conn,**img) for img in images]
             for k,v in filters.iteritems():
                 images = filter(lambda x: v in getattr(x,k), images)
 
             return images
 
         #convert dictionary to Image objects
-        return [Image(**img) for img in images]
+        return [Image(conn=self._conn, **img) for img in images]
 
 
     def get_image(self, image_id=None):
@@ -474,12 +452,7 @@ class connect_d0(object):
 
         log.info(data)
 
-        #don't like this but will do for now
-        data['image']['_client_id'] = self._client_id
-        data['image']['_api_key'] = self._api_key
-
-
-        return Image(**data['image'])
+        return Image(conn=self._conn, **data['image'])
 
     def get_all_domains(self,filters=None, status_check=None, table=False, raw_data=False):
         """
@@ -505,18 +478,18 @@ class connect_d0(object):
             self._pprint_table(data['domains'])
             return
 
-        domains = self._attach_auth(data['domains'])
+        domains = data['domains']
 
         if filters:
-            droplets = [Droplet(**drop) for drop in domains]
+            doms = [Domain(conn=self._conn, **drop) for drop in domains]
             for k,v in filters.iteritems():
-                droplets = filter(lambda x: v in getattr(x,k), droplets)
+                doms = filter(lambda x: v in getattr(x,k), doms)
 
-            return droplets
+            return doms
 
 
         #convert dictionary to droplet objects
-        return [Domain(**dom) for dom in domains]
+        return [Domain(conn=self._conn, **dom) for dom in domains]
 
     def create_domain(self,name=None,ip_addr=None):
         """
@@ -541,10 +514,7 @@ class connect_d0(object):
 
         log.debug(data)
 
-        #don't like this but will do for now
-        data['domain']['_client_id'] = self._client_id
-        data['domain']['_api_key'] = self._api_key
-        domain = Domain(**data['domain'])
+        domain = Domain(conn=self._conn, **data['domain'])
 
         return domain
 
@@ -569,10 +539,5 @@ class connect_d0(object):
 
         log.debug(data)
 
-        #don't like this but will do for now
-        data['domain']['_client_id'] = self._client_id
-        data['domain']['_api_key'] = self._api_key
-
-
-        return Domain(**data['domain'])
+        return Domain(conn=self._conn, **data['domain'])
 

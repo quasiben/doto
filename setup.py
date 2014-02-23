@@ -1,6 +1,6 @@
 import sys
 
-from distutils.core import setup
+from setuptools import setup
 
 import versioneer
 
@@ -20,4 +20,10 @@ setup(
     install_requires=['requests>=2.0.1',
                       'pycrypto>=2.6.1'],
     package_data={'doto':['dotorc']},
+    entry_points = {
+        'console_scripts' : [
+            'doto = doto.cli:main'
+            ]
+    }
+
 )
