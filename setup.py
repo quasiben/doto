@@ -16,7 +16,7 @@ setup(
     cmdclass = versioneer.get_cmdclass(),
     description='Python Interface to Digital Ocean',
     author = 'Benjamin Zaitlen',
-    packages = ['doto'],
+    packages = ['doto','doto.commands'],
     install_requires=['requests>=2.0.1',
                       'pycrypto>=2.6.1'],
     package_data={'doto':['dotorc']},
