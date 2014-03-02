@@ -26,7 +26,7 @@ BASEURL = "https://api.digitalocean.com"
 
 class connect_d0(object):
 
-    def __init__(self, path=None,log_flag=True, client_id=None,api_key=None ):
+    def __init__(self, path=None, log_flag=True, client_id=None,api_key=None ):
         '''
 
         :type path: string
@@ -138,7 +138,7 @@ class connect_d0(object):
                           region_id=region_id,ssh_key_ids=ssh_key_ids,
                           private_networking=private_networking)
 
-        droplet = Droplet(conn=_conn, **data['droplet'])
+        droplet = Droplet(conn=self._conn, **data['droplet'])
 
         droplet.update()
         droplet.event_update()
@@ -199,7 +199,7 @@ class connect_d0(object):
         #convert dictionary to droplet objects
         return [Droplet(conn=self._conn, **drop) for drop in droplets]
 
-    def get_droplet(self, id=None):
+    def get_droplet(self, id=None, raw_data=False):
         """
         This method returns full information for a specific droplet ID that is passed in the URL.
 
@@ -212,6 +212,9 @@ class connect_d0(object):
         """
 
         data = self._conn.request("/droplets/"+str(id))
+
+        if raw_data:
+            return data
 
         #convert dictionary to droplet objects
         return Droplet(conn=self._conn, **data['droplet'])
@@ -301,12 +304,19 @@ class connect_d0(object):
 
         return sshkeys
 
-    def create_key_pair(self, ssh_key_name=None, dry_run=False):
+    def create_key_pair(self, ssh_key_name=None, cli=False, dry_run=False):
         """
-        Method to create a key pair and store the public key on Digital Ocean's servers
+        Method to create a key pair and store the public key on Digital Ocean's servers.
+        SSH Keys are store in ~/.ssh/
+
+        NOTE: All key names are prepended with d0 to help disambiguate Digital Ocean keys
 
         :type ssh_key_name: string
         :param ssh_key_name: The name of the new keypair
+
+        :type dry_run: cli
+        :param dry_run: Set to True if you are using the cli utility and want the path defined
+        ~/.ssh/my_new_key
 
         :type dry_run: bool
         :param dry_run: Set to True if the operation should not actually run.
@@ -318,32 +328,41 @@ class connect_d0(object):
         client_id=[your_client_id]&api_key=[your_api_key]
         """
 
-        ssh_path = pjoin(expanduser('~'), '.ssh')
+        path, file = os.path.split(ssh_key_name)
+        file = 'd0_'+file
 
-        if not os.path.isdir(ssh_path): os.makedirs(ssh_path)
+        if not cli:
+            path = pjoin(expanduser('~'), '.ssh')
+        else:
+            path = expanduser(path)
 
-        #store key file in ~/.ssh
-        keyfile = pjoin(ssh_path, ssh_key_name)
+        if not os.path.isdir(path):
+            os.makedirs(path)
+
+        keyfile = pjoin(path, file)
 
         key = RSA.generate(2048,os.urandom)
 
         #public key
-        with open(keyfile+'_rsa.pub','w') as f:
+        with open(keyfile+'.pub','w') as f:
             f.write(key.exportKey('OpenSSH'))
         public_key = key.exportKey('OpenSSH')
-        os.chmod(keyfile+'_rsa.pub', 0o0600)
+        os.chmod(keyfile+'.pub', 0o0600)
 
         #private key
-        with open(keyfile+'_rsa','w') as f:
+        with open(keyfile,'w') as f:
             f.write(key.exportKey())
 
-        os.chmod(keyfile+'_rsa', 0o0600)
+        os.chmod(keyfile, 0o0600)
 
-        data = self._conn.request("/ssh_keys/new/", name=ssh_key_name,
+        if dry_run:
+            return
+
+        data = self._conn.request("/ssh_keys/new/", name=file,
                              ssh_pub_key=public_key)
 
         #include path to newly created file
-        data['ssh_key']['path'] = keyfile+'_rsa'
+        data['ssh_key']['path'] = keyfile
 
         log.info(data['ssh_key'])
         return data['ssh_key']

@@ -2,9 +2,7 @@ from __future__ import print_function, division, absolute_import
 import requests
 
 from doto.logger import log
-
-class DOError(Exception):
-    pass
+from doto.errors import DOError
 
 class connection(object):
 
