@@ -47,23 +47,17 @@ class Image(object):
         self.event_update()
         return self.percentage
 
-    def destroy(self, image_id=None):
+    def destroy(self):
         """
         This method allows you to destroy an image.
         There is no way to restore a deleted image so be careful and ensure your data is properly backed up.
 
-        :type image_id: int
-        :param image_id: The ID of the image
-
         """
-        # https://api.digitalocean.com/images/[image_id]/destroy/?
-        # client_id=[your_client_id]&api_key=[your_api_key]
-
         url = "/images/%s/destroy" % (str(self.id))
 
         data = self._conn.request(url)
 
-        log.info(data)
+        log.debug(data)
 
     def transfer_image(self, region_id=None):
         """
@@ -85,4 +79,4 @@ class Image(object):
 
         self.event_id = data['event_id']
 
-        log.info(data)
+        log.debug(data)

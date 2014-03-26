@@ -16,6 +16,8 @@ def main(args=None, exit=True):
     parser = ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(help='commands')
 
+    parser.add_argument('-w', '--wait', action='store_true')
+    
     for command in sub_commands():
         command.add_parser(subparsers)
 

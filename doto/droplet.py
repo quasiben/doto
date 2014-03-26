@@ -3,6 +3,7 @@ from __future__ import print_function, division, absolute_import
 from doto.logger import log
 
 import requests
+from doto.event import Event
 
 
 class Droplet(object):
@@ -28,7 +29,7 @@ class Droplet(object):
         data = self._conn.request("/droplets/"+str(self.id))
 
         self.__dict__.update(**data['droplet'])
-
+    
     def event_update(self):
         """
         Method to update Droplet
@@ -77,10 +78,10 @@ class Droplet(object):
 
         self.event_id = data['event_id']
 
-        log.info("Renaming: %d To: %s Event: %d" % (self.id, name, self.event_id))
+        log.debug("Renaming: %d To: %s Event: %d" % (self.id, name, self.event_id))
         self.update()
 
-    def rebuild(self, image_id=None,use_current=False):
+    def rebuild(self, image_id=None, use_current=False):
 
         """
         This method allows you to reinstall a droplet with a default image.
@@ -106,8 +107,10 @@ class Droplet(object):
         self.event_id = data['event_id']
 
         self.update()
-        log.info("Rebuild: %d With: %d Event: %d" % (self.id, image_id, self.event_id))
+        log.debug("Rebuild: %d With: %d Event: %d" % (self.id, image_id, self.event_id))
 
+        return Event(self._conn,self.event_id)
+    
     def restore(self, image_id=None):
 
         """
@@ -131,7 +134,7 @@ class Droplet(object):
 
         self.event_id = data['event_id']
 
-        log.info("Restoring: %d With: %d Event: %d" % (self.id, image_id, self.event_id))
+        log.debug("Restoring: %d With: %d Event: %d" % (self.id, image_id, self.event_id))
         self.update()
 
 
@@ -157,7 +160,7 @@ class Droplet(object):
 
         self.event_id = data['event_id']
 
-        log.info("Destroying: %d, Event: %d" % (self.id, self.event_id))
+        log.debug("Destroying: %d, Event: %d" % (self.id, self.event_id))
 
 
     def destroy(self, scrub_data=1):
@@ -178,7 +181,7 @@ class Droplet(object):
 
         self.event_id = data['event_id']
 
-        log.info("Destroying: %d, Event: %d" % (self.id, self.event_id))
+        log.debug("Destroying: %d, Event: %d" % (self.id, self.event_id))
 
     def reboot(self):
         """
@@ -195,7 +198,7 @@ class Droplet(object):
 
         self.event_id = data['event_id']
 
-        log.info("Rebooting: %d, Event: %d" % (self.id, self.event_id))
+        log.debug("Rebooting: %d, Event: %d" % (self.id, self.event_id))
 
     def shutdown(self):
         """
@@ -212,8 +215,8 @@ class Droplet(object):
 
         self.event_id = data['event_id']
 
-        log.info("Shutting Down: %d, Event: %d" % (self.id, self.event_id))
-        log.info("Droplet remains active in your account")
+        log.debug("Shutting Down: %d, Event: %d" % (self.id, self.event_id))
+        log.debug("Droplet remains active in your account")
 
 
 
@@ -232,7 +235,7 @@ class Droplet(object):
 
         self.event_id = data['event_id']
 
-        log.info("Power Cycle: %d, Event: %d" % (self.id, self.event_id))
+        log.debug("Power Cycle: %d, Event: %d" % (self.id, self.event_id))
 
     def power_off(self):
         """
@@ -249,8 +252,9 @@ class Droplet(object):
 
         self.event_id = data['event_id']
 
-        log.info("Powering Off: %d, Event: %d" % (self.id, self.event_id))
-
+        log.debug("Powering Off: %d, Event: %d" % (self.id, self.event_id))
+        
+        return Event(self._conn, self.event_id)
 
 
     def power_on(self):
@@ -267,8 +271,9 @@ class Droplet(object):
 
         self.event_id = data['event_id']
 
-        log.info("Powering On: %d, Event: %d" % (self.id, self.event_id))
+        log.debug("Powering On: %d, Event: %d" % (self.id, self.event_id))
 
+        return Event(self._conn, self.event_id)
 
     def password_reset(self):
         """
@@ -285,8 +290,8 @@ class Droplet(object):
 
         self.event_id = data['event_id']
 
-        log.info("Resetting Password: %d, Event: %d" % (self.id, self.event_id))
-        log.info("Rebooting Droplet")
+        log.debug("Resetting Password: %d, Event: %d" % (self.id, self.event_id))
+        log.debug("Rebooting Droplet")
 
 
     def resize(self,size=None):
@@ -311,8 +316,8 @@ class Droplet(object):
 
         self.event_id = data['event_id']
 
-        log.info("Resizing Droplet: %d, Event: %d" % (self.id, self.event_id))
-        log.info("Rebooting Droplet")
+        log.debug("Resizing Droplet: %d, Event: %d" % (self.id, self.event_id))
+        log.debug("Rebooting Droplet")
 
     def create_snapshot(self,name=None):
         """
@@ -327,17 +332,13 @@ class Droplet(object):
         client_id=[your_client_id]&api_key=[your_api_key]
         """
 
-
-        #should thread this in the future
-        log.info("Powering off %d" % (self.id))
-        self.power_off()
-        while self.status != 'off':
-            self.update()
-
         url = "/droplets/%s/snapshot" % (str(self.id))
 
         data = self._conn.request(url,name=name)
 
         self.event_id = data['event_id']
 
-        log.info("Taking Snapshot: %d, Event: %d" % (self.id, self.event_id))
+        log.debug("Taking Snapshot: %d, Event: %d" % (self.id, self.event_id))
+
+        return Event(self._conn, self.event_id)
+

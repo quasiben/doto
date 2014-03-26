@@ -28,7 +28,7 @@ class connection(object):
 
         BASEURL = "https://api.digitalocean.com"
         response = requests.get(BASEURL+event,headers=headers,params=kwds)
-        log.info('Getting '+event)
+        log.debug('Getting '+event)
         log.debug(response.url)
 
         if response.status_code == 200:

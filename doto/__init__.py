@@ -12,11 +12,11 @@ import os
 from os.path import join as pjoin
 
 try:
-  os.path.expanduser('~')
-  expanduser = os.path.expanduser
+    os.path.expanduser('~')
+    expanduser = os.path.expanduser
 except (AttributeError, ImportError):
-  # This is probably running on App Engine.
-  expanduser = (lambda x: x)
+    # This is probably running on App Engine.
+    expanduser = (lambda x: x)
 
 from ._version import get_versions
 __version__ = get_versions()['version']
@@ -156,7 +156,7 @@ class connect_d0(object):
         droplets = self.get_all_droplets()
         for d in droplets:
             if d.name == name:
-              return d
+                return d
         return None
 
 
@@ -173,7 +173,7 @@ class connect_d0(object):
         """
 
 
-        log.info("Get All Droplets")
+        log.debug("Get All Droplets")
         data = self._conn.request("/droplets",status_check)
 
         if status_check:
@@ -364,7 +364,7 @@ class connect_d0(object):
         #include path to newly created file
         data['ssh_key']['path'] = keyfile
 
-        log.info(data['ssh_key'])
+        log.debug(data['ssh_key'])
         return data['ssh_key']
 
     def delete_key_pair(self, ssh_key_id=None):
@@ -382,7 +382,7 @@ class connect_d0(object):
 
         data = self._conn.request(url)
 
-        log.info(data)
+        log.debug(data)
 
     def get_ssh_key(self, ssh_key_id=None):
         """
@@ -399,7 +399,17 @@ class connect_d0(object):
 
         data = self._conn.request(url)
 
-        log.info(data)
+        log.debug(data)
+
+    def get_image_by_name(self, name):
+        """
+        Convenience method to make it easy to select a droplet by name
+        """
+        images = self.get_all_images()
+        for img in images:
+            if img.name == name:
+                return img
+        return None
 
     def get_all_images(self, filters=None, status_check=False, table=False, raw_data=False):
         """
@@ -469,7 +479,7 @@ class connect_d0(object):
         data = self._conn.request(url)
 
 
-        log.info(data)
+        log.debug(data)
 
         return Image(conn=self._conn, **data['image'])
 
@@ -526,7 +536,7 @@ class connect_d0(object):
         """
 
 
-        log.info("Creating new domain")
+        log.debug("Creating new domain")
 
         data = self._conn.request("/domains/new",name=name,
                           ip_address=ip_addr)
