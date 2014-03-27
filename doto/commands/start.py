@@ -2,6 +2,9 @@
 
 Create a Droplet
 
+eg:
+doto start --name Random --size_id 66 --image_id 2158507 --region_id 1 --ssh_key_ids 89221
+
 '''
 
 from __future__ import print_function, division, absolute_import
@@ -16,8 +19,6 @@ def main(args):
     image_id = args.image_id
     region_id = args.region_id
     ssh_keys = args.ssh_key_ids
-
-    print(args)
 
     #convert ssh_keys to list of ints
     ssh_keys = ssh_keys.split(',')
@@ -55,12 +56,3 @@ def add_parser(subparsers):
 
     parser.set_defaults(main=main, sub_parser=parser)
 
-# doto start --name Random --size_id 66 --image_id 2158507 --region_id 1 --ssh_key_ids 89221
-
-#
-# droplet = d0.create_droplet(name='Random',
-#                                size_id=66, #512MB
-#                                image_id=1341147, #Docker 0.7 Ubuntu 13.04 x64
-#                                region_id=1, #New York
-#                                ssh_key_ids=18669
-#                                )
