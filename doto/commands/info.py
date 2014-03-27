@@ -26,6 +26,6 @@ def add_parser(subparsers):
     parser = subparsers.add_parser('info',
                                       help="Get droplet status",
                                       description=__doc__)
-    parser.add_argument("droplet_name")
+    parser.add_argument("droplet_name", help="droplet name or droplet id")
     parser.add_argument("attr")
     parser.set_defaults(main=main, sub_parser=parser)
