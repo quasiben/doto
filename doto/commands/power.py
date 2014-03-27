@@ -1,6 +1,9 @@
 '''
 
-Terminate a droplet
+power on/off a droplet
+
+e.g:
+doto power-off Random
 
 '''
 
@@ -9,7 +12,11 @@ from doto import connect_d0
 
 def power_on(args):
     d0 = connect_d0()
-    droplet = d0.get_droplet_by_name(args.droplet_name)
+    try:
+        droplet = d0.get_droplet(int(args.droplet_name))
+    except ValueError:
+        droplet = d0.get_droplet_by_name(args.droplet_name)
+
     e = droplet.power_on()
     
     print("Powering On")
@@ -24,7 +31,11 @@ def print_callback(wait_status, event):
     
 def power_off(args):
     d0 = connect_d0()
-    droplet = d0.get_droplet_by_name(args.droplet_name)
+    try:
+        droplet = d0.get_droplet(int(args.droplet_name))
+    except ValueError:
+        droplet = d0.get_droplet_by_name(args.droplet_name)
+
     e = droplet.power_off()
     
     print("Powering Off")
@@ -39,12 +50,12 @@ def add_parser(subparsers):
     parser = subparsers.add_parser('power-on',
                                       help="Power on droplet",
                                       description=__doc__)
-    parser.add_argument("droplet_name")
+    parser.add_argument("droplet_name", help="droplet name or droplet id")
     parser.set_defaults(main=power_on, sub_parser=parser)
 
     parser = subparsers.add_parser('power-off',
                                       help="Power off droplet",
                                       description=__doc__)
-    parser.add_argument("droplet_name")
+    parser.add_argument("droplet_name", help="droplet name or droplet id")
     parser.set_defaults(main=power_off, sub_parser=parser)
 
