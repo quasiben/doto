@@ -33,8 +33,9 @@ or install `from source <https://github.com/quasiben/doto/>`_
 Why yet another Python library for Digital Ocean?
 
 * Logging
-* boto like interface
+* boto like interface for integrated development
 * Optionally formatted tables for inline exploration
+* CLI
 
 Getting Started
 ---------------
@@ -58,6 +59,17 @@ You are now ready to use doto::
                                 region_id=1, #New York
                                 ssh_key_ids=[new_key['id']]
                                 )
+
+
+
+Or use doto directly from the command line:
+
+.. code-block:: console
+
+    $ doto --help
+    $ doto start --name Random --size_id 66 --image_id 2158507 --region_id 1 --ssh_key_ids 89221
+    $ doto listdroplets
+    $ ...
 
 
 Doto is designed to support both Python 2.7 and Python 3.  A number of functions add a bit more than just returning
@@ -124,6 +136,7 @@ Currently Supported Services
     Management
     config
     PublicImages
+    CLI
 
 Requirements
 ------------
@@ -136,6 +149,7 @@ Requirements
 Release Notes
 -------------
 
+- New CLI tool
 
 
 Indices and tables

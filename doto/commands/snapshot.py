@@ -27,7 +27,7 @@ def print_callback(wait_status, event):
         
 def add_parser(subparsers):
     parser = subparsers.add_parser('snapshot',
-                                      help="Power on droplet",
+                                      help="Save snapshot of droplet",
                                       description=__doc__)
     parser.add_argument("droplet_name")
     parser.add_argument("image_name")

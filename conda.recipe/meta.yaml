@@ -1,11 +1,11 @@
 package:
   name: doto
-  version: 0.2
+  version: 0.3
 
 requirements:
   build:
     - python
-    - distribute
+    - setuptools
 
   run:
     - python

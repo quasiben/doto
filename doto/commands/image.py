@@ -1,6 +1,6 @@
 '''
 
-Terminate a droplet
+list images by name
 
 '''
 

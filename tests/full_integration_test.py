@@ -25,3 +25,6 @@ droplet.rebuild(use_current=True)
 
 while droplet.percentage_update() != '100':
     print droplet.percentage
+
+droplet.destroy()
+d0.delete_key_pair(ssh_key_id=new_key['id'])

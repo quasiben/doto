@@ -35,7 +35,7 @@ def print_callback(wait_status, event):
         
 def add_parser(subparsers):
     parser = subparsers.add_parser('rebuild',
-                                      help="Power on droplet",
+                                      help="Rebuild a droplet",
                                       description=__doc__)
     parser.add_argument("droplet_name")
     parser.add_argument('-i','--image')
