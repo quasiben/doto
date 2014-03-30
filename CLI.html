@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Search &mdash; doto 0.2 documentation</title>
+  <title>Command Line Interface &mdash; doto 0.2 documentation</title>
   
 
   
@@ -31,7 +31,6 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/searchtools.js"></script>
 
     
 
@@ -45,13 +44,7 @@
 
   
     <link rel="top" title="doto 0.2 documentation" href="index.html"/>
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
-   
-
+        <link rel="prev" title="Public Images" href="PublicImages.html"/> 
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
@@ -65,7 +58,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
         <a href="index.html" class="icon icon-home"> doto</a>
-        <form class="wy-form" action="#" method="get">
+        <form class="wy-form" action="search.html" method="get">
   <input type="text" name="q" placeholder="Search docs" />
   <input type="hidden" name="check_keywords" value="yes" />
   <input type="hidden" name="area" value="default" />
@@ -75,7 +68,7 @@
       <div class="wy-menu wy-menu-vertical" data-spy="affix">
         
         
-            <ul>
+            <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Droplets.html">Droplets</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Droplets.html#creating-droplets">Creating Droplets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Droplets.html#getting-a-specific-droplet">Getting a specific droplet</a></li>
@@ -103,11 +96,11 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PublicImages.html">Public Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CLI.html">Command Line Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="CLI.html#droplets">Droplets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="CLI.html#ssh-keys">SSH Keys</a></li>
-<li class="toctree-l2"><a class="reference internal" href="CLI.html#images">Images</a></li>
-<li class="toctree-l2"><a class="reference internal" href="CLI.html#snapshot">Snapshot</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Command Line Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#droplets">Droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ssh-keys">SSH Keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#images">Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#snapshot">Snapshot</a></li>
 </ul>
 </li>
 </ul>
@@ -131,27 +124,77 @@
         <div class="rst-content">
           <ul class="wy-breadcrumbs">
   <li><a href="index.html">Docs</a> &raquo;</li>
-  <li><a href=""></a></li>
+  <li><a href="">Command Line Interface</a></li>
   
 </ul>
 <hr/>
 
           
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
-    </p>
-  </div>
-  </noscript>
+  <div class="section" id="command-line-interface">
+<h1>Command Line Interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h1>
+<p>Doto provides a CLI tool for creating/destroying/managing resources on Digital Ocean from the command line.
+Many arguments can be prepended with an optional <cite>&#8211;wait</cite>, which instructs doto not to return control of the prompt
+until an event has completed.  This is especially useful during creation and destruction of droplets.</p>
+<div class="section" id="droplets">
+<h2>Droplets<a class="headerlink" href="#droplets" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-python"><pre>$ doto start --name Random --size_id 66 --image_id 2158507 --region_id 1 --ssh_key_ids 89221</pre>
+</div>
+<p>List of arguments:</p>
+<ul class="simple">
+<li>start</li>
+<li>listdroplets</li>
+<li>power-on</li>
+<li>power-off</li>
+<li>rebuilt</li>
+<li>terminate</li>
+<li>info</li>
+</ul>
+</div>
+<div class="section" id="ssh-keys">
+<h2>SSH Keys<a class="headerlink" href="#ssh-keys" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-python"><pre>$ doto createkey -o file_name</pre>
+</div>
+<p>List of arguments:</p>
+<ul class="simple">
+<li>createkey</li>
+<li>deletekey</li>
+<li>listkeys</li>
+</ul>
+</div>
+<div class="section" id="images">
+<h2>Images<a class="headerlink" href="#images" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-python"><pre>$ doto image "image name" show/destroy</pre>
+</div>
+<p>List of arguments:</p>
+<ul class="simple">
+<li>image</li>
+<li>listimages</li>
+</ul>
+</div>
+<div class="section" id="snapshot">
+<h2>Snapshot<a class="headerlink" href="#snapshot" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-python"><pre>$ doto snapshot "droplet name" "snapshot name"</pre>
+</div>
+<p>List of arguments:</p>
+<ul class="simple">
+<li>snapshot</li>
+</ul>
+</div>
+</div>
 
-  
-  <div id="search-results">
-  
-  </div>
 
           <footer>
+  
+    <div class="rst-footer-buttons">
+      
+      
+        <a href="PublicImages.html" class="btn btn-neutral" title="Public Images"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

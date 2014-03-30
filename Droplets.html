@@ -97,6 +97,13 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PublicImages.html">Public Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CLI.html">Command Line Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CLI.html#droplets">Droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CLI.html#ssh-keys">SSH Keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CLI.html#images">Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CLI.html#snapshot">Snapshot</a></li>
+</ul>
+</li>
 </ul>
 
         
@@ -155,7 +162,7 @@ variety of RAM, HD, CPU configurations.</p>
 <h2>Droplet API<a class="headerlink" href="#droplet-api" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="doto.Droplet">
-<em class="property">class </em><tt class="descclassname">doto.</tt><tt class="descname">Droplet</tt><big>(</big><em>**kwds</em><big>)</big><a class="headerlink" href="#doto.Droplet" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">doto.</tt><tt class="descname">Droplet</tt><big>(</big><em>conn=None</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#doto.Droplet" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="doto.Droplet.create_snapshot">
 <tt class="descname">create_snapshot</tt><big>(</big><em>name=None</em><big>)</big><a class="headerlink" href="#doto.Droplet.create_snapshot" title="Permalink to this definition">¶</a></dt>

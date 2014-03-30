@@ -96,6 +96,13 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PublicImages.html">Public Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CLI.html">Command Line Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CLI.html#droplets">Droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CLI.html#ssh-keys">SSH Keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CLI.html#images">Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CLI.html#snapshot">Snapshot</a></li>
+</ul>
+</li>
 </ul>
 
         
@@ -143,8 +150,9 @@
 <p>Why yet another Python library for Digital Ocean?</p>
 <ul class="simple">
 <li>Logging</li>
-<li>boto like interface</li>
+<li>boto like interface for integrated development</li>
 <li>Optionally formatted tables for inline exploration</li>
+<li>CLI</li>
 </ul>
 </div>
 <div class="section" id="getting-started">
@@ -167,6 +175,13 @@
                             <span class="n">region_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="c">#New York</span>
                             <span class="n">ssh_key_ids</span><span class="o">=</span><span class="p">[</span><span class="n">new_key</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]]</span>
                             <span class="p">)</span>
+</pre></div>
+</div>
+<p>Or use doto directly from the command line:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> doto --help
+<span class="gp">$</span> doto start --name Random --size_id 66 --image_id 2158507 --region_id 1 --ssh_key_ids 89221
+<span class="gp">$</span> doto listdroplets
+<span class="gp">$</span> ...
 </pre></div>
 </div>
 <p>Doto is designed to support both Python 2.7 and Python 3.  A number of functions add a bit more than just returning
@@ -228,6 +243,7 @@ CentOS CentOS 6.5 x64 1646467</pre>
 <li class="toctree-l1"><a class="reference internal" href="Management.html">Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PublicImages.html">Public Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CLI.html">Command Line Interface</a></li>
 </ul>
 </div>
 <div class="section" id="requirements">
@@ -240,6 +256,9 @@ CentOS CentOS 6.5 x64 1646467</pre>
 </div>
 <div class="section" id="release-notes">
 <h2>Release Notes<a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>New CLI tool</li>
+</ul>
 </div>
 </div>
 <div class="section" id="indices-and-tables">

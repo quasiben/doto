@@ -97,6 +97,13 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PublicImages.html">Public Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CLI.html">Command Line Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CLI.html#droplets">Droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CLI.html#ssh-keys">SSH Keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CLI.html#images">Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CLI.html#snapshot">Snapshot</a></li>
+</ul>
+</li>
 </ul>
 
         
@@ -171,20 +178,12 @@
 <h2>Image API<a class="headerlink" href="#image-api" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="doto.Image">
-<em class="property">class </em><tt class="descclassname">doto.</tt><tt class="descname">Image</tt><big>(</big><em>**kwds</em><big>)</big><a class="headerlink" href="#doto.Image" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">doto.</tt><tt class="descname">Image</tt><big>(</big><em>conn=None</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#doto.Image" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="doto.Image.destroy">
-<tt class="descname">destroy</tt><big>(</big><em>image_id=None</em><big>)</big><a class="headerlink" href="#doto.Image.destroy" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#doto.Image.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method allows you to destroy an image.
 There is no way to restore a deleted image so be careful and ensure your data is properly backed up.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image_id</strong> (<em>int</em>) &#8211; The ID of the image</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 <dl class="method">

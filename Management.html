@@ -97,6 +97,13 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PublicImages.html">Public Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CLI.html">Command Line Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CLI.html#droplets">Droplets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CLI.html#ssh-keys">SSH Keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CLI.html#images">Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CLI.html#snapshot">Snapshot</a></li>
+</ul>
+</li>
 </ul>
 
         
@@ -130,7 +137,7 @@
 <h2>DigitalOcean API<a class="headerlink" href="#digitalocean-api" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="doto.connect_d0">
-<em class="property">class </em><tt class="descclassname">doto.</tt><tt class="descname">connect_d0</tt><big>(</big><em>path=None</em>, <em>debug=True</em><big>)</big><a class="headerlink" href="#doto.connect_d0" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">doto.</tt><tt class="descname">connect_d0</tt><big>(</big><em>path=None</em>, <em>log_flag=True</em>, <em>client_id=None</em>, <em>api_key=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="doto.connect_d0.create_domain">
 <tt class="descname">create_domain</tt><big>(</big><em>name=None</em>, <em>ip_addr=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.create_domain" title="Permalink to this definition">¶</a></dt>
@@ -222,23 +229,32 @@ ssh_key_ids=18669
 
 <dl class="method">
 <dt id="doto.connect_d0.create_key_pair">
-<tt class="descname">create_key_pair</tt><big>(</big><em>ssh_key_name=None</em>, <em>dry_run=False</em><big>)</big><a class="headerlink" href="#doto.connect_d0.create_key_pair" title="Permalink to this definition">¶</a></dt>
-<dd><p>Method to create a key pair and store the public key on Digital Ocean&#8217;s servers</p>
+<tt class="descname">create_key_pair</tt><big>(</big><em>ssh_key_name=None</em>, <em>cli=False</em>, <em>dry_run=False</em><big>)</big><a class="headerlink" href="#doto.connect_d0.create_key_pair" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to create a key pair and store the public key on Digital Ocean&#8217;s servers.
+SSH Keys are store in ~/.ssh/</p>
+<p>NOTE: All key names are prepended with d0 to help disambiguate Digital Ocean keys</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>ssh_key_name</strong> (<em>string</em>) &#8211; The name of the new keypair</li>
-<li><strong>dry_run</strong> (<em>bool</em>) &#8211; Set to True if the operation should not actually run.</li>
+<li><strong>dry_run</strong> (<em>cli</em>) &#8211; Set to True if you are using the cli utility and want the path defined</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">dict</p>
-</td>
+</tbody>
+</table>
+<p>~/.ssh/my_new_key</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dry_run</strong> (<em>bool</em>) &#8211; Set to True if the operation should not actually run.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Dictionary of SSH key info and local path</p>
-</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dictionary of SSH key info and local path</td>
 </tr>
 </tbody>
 </table>
@@ -375,7 +391,7 @@ client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
 
 <dl class="method">
 <dt id="doto.connect_d0.get_droplet">
-<tt class="descname">get_droplet</tt><big>(</big><em>id=None</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_droplet" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_droplet</tt><big>(</big><em>id=None</em>, <em>raw_data=False</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_droplet" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns full information for a specific droplet ID that is passed in the URL.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -413,6 +429,12 @@ client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
 </table>
 <p><a class="reference external" href="https://api.digitalocean.com/images/[image_id]/">https://api.digitalocean.com/images/[image_id]/</a>?
 client_id=[your_client_id]&amp;api_key=[your_api_key]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="doto.connect_d0.get_image_by_name">
+<tt class="descname">get_image_by_name</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#doto.connect_d0.get_image_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to make it easy to select a droplet by name</p>
 </dd></dl>
 
 <dl class="method">
