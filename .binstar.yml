@@ -10,10 +10,10 @@ engine:
 
 before_script:
   - python -V
-  - conda install -q six requests pycrypto jinja2
+  - conda install -q six requests pycrypto jinja2 setuptools
 
 script:
-  - python setup.py install
+  - python setup.py install --single-version-externally-managed --record=/tmp/record.txt
   - python -c 'import doto';
   - python tests/test_gets.py
   - conda build conda.recipe
