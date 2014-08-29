@@ -3,6 +3,7 @@ package: doto
 
 platform:
   - linux-64
+  - osx-64
 
 engine:
    - python=2
@@ -12,15 +13,22 @@ before_script:
   - python -V
   - conda install -q six requests pycrypto jinja2 setuptools
 
-script:
-  - python setup.py install --single-version-externally-managed --record=/tmp/record.txt
-  - python -c 'import doto';
-  - python tests/test_gets.py
-  - conda build conda.recipe
-  - mkdir dist
-  - cp `conda build conda.recipe --output` dist/
+script: |
+  conda build conda.recipe;
+  echo `uname`;
+  platform=`uname`;
+  if [[ "$platform" == 'Linux' ]]; then
+  mkdir -p /opt/anaconda/conda-bld/win-64;
+  conda convert -p win-64 /opt/anaconda/conda-bld/linux-64/doto*.tar.bz2;
+  filename=`ls win-64/doto*.tar.bz2 | xargs -n 1 basename`;
+  echo $filename;
+  cp -r win-64/$filename /opt/anaconda/conda-bld/win-64/$filename;
+  fi;
+  python -c 'import doto';
+  python tests/test_gets.py;
 
 
 ## Build Targets: Upload these files to your binstar package
 build_targets:
-  - dist/*
+    files: /opt/anaconda/conda-bld/*/doto*.tar.bz2
+    channels: 'main'
