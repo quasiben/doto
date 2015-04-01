@@ -83,7 +83,7 @@ class Domain(object):
         client_id=[your_client_id]&api_key=[your_api_key]
         """
 
-        log.info("Getting Record: %d" (record_id))
+        log.info("Getting Record: %d" % (record_id))
         url = "/domains/%s/records/%d" % (str(self.id), record_id)
 
         data = self._conn.request(url)
