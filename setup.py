@@ -18,6 +18,7 @@ setup(
     author = 'Benjamin Zaitlen',
     packages = ['doto','doto.commands'],
     install_requires=['requests>=2.0.1',
+                      'six>=1.9.0',
                       'pycrypto>=2.6.1'],
     package_data={'doto':['dotorc']},
     entry_points = {
